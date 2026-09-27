@@ -97,6 +97,7 @@ Master's in Data Science and Engineering — Data Science & Analytics
 
 ## Certifications
 
+- Microsoft Certified: Azure AI Cloud Developer Associate (Sep 2026) — [verify](https://learn.microsoft.com/en-us/users/jaswanthgaddam/credentials/af3c690144b4ee0d)
 - IBM — Data Analysis with Python
 - IBM — Introduction to Data Engineering
 - Snowflake — Hands-on All Badges

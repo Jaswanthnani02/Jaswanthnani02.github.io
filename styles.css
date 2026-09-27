@@ -967,6 +967,32 @@ a:hover { color: var(--accent); }
     margin-bottom: 0 !important;
 }
 
+.cert-card {
+    margin-top: 0;
+    text-decoration: none;
+    color: inherit;
+}
+
+.cert-badge {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: var(--accent-subtle);
+    border: 1px solid var(--border-accent);
+}
+
+.cert-list {
+    max-width: 720px;
+    margin-top: 28px;
+}
+
+.cert-verify {
+    color: var(--accent);
+}
+
 /* ============================================
    EXPERIENCE
    ============================================ */
