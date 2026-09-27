@@ -1,65 +1,31 @@
-# Jaswanth Gaddam - Advanced Portfolio
+# jaswanthnani02.github.io
 
-An advanced, animation-rich portfolio built with React and a lightweight Node/Express API for local development.
+Portfolio site for **Jaswanth Gaddam**, Cloud and AI Solutions Engineer (Chicago).
 
-## Features
+**Live:** https://jaswanthnani02.github.io/ · [Resume (PDF)](Jaswanth-Gaddam-Resume.pdf) · [LinkedIn](https://www.linkedin.com/in/gaddamjaswanth/)
 
-- **Cinematic UI**: editorial typography, atmospheric gradients, and premium cards.
-- **Motion System**: reveal-on-scroll, floating orbs, and interactive hover states.
-- **Professional Structure**: capability, project, experience, and contact sections.
-- **API Ready**: simple Express endpoints to power status and contact forms.
+## What's on it
 
-## Tech Stack
+- **Work:** Azure Functions ticket dispatcher (100k+ tickets auto-assigned), MCP tool servers with RBAC, a Cosmos DB ops dashboard, and n8n onboarding automation
+- **Proof:** links to the public [architecture case study](https://github.com/Jaswanthnani02/client-intelligence-platform) and demo repos, plus a redacted architecture diagram and dashboard mock
+- **Certifications, conferences, education, and contact**
 
-- **React + Vite** for the client app
-- **Node + Express** for the API
-- **CSS** with custom variables and animations
+## Stack
 
-## Project Structure
+Plain HTML, CSS, and JavaScript. No build step. GSAP and Three.js load from a CDN for motion and the background canvas.
+GitHub Actions deploys `main` to GitHub Pages (`.github/workflows/static.yml`).
 
-```
-Github-pages/
-├── client/
-│   ├── public/
-│   │   ├── badges.jpg
-│   │   ├── badges.webp
-│   │   ├── profile.jpg
-│   │   └── resume.html
-│   ├── src/
-│   │   ├── App.jsx
-│   │   ├── main.jsx
-│   │   └── styles.css
-│   ├── index.html
-│   ├── package.json
-│   └── vite.config.js
-├── server/
-│   ├── index.js
-│   └── package.json
-└── README.md
-```
+| File | Purpose |
+| --- | --- |
+| `index.html` | The portfolio |
+| `resume.html` / `resume.md` | The resume as a web page and as Markdown |
+| `Jaswanth-Gaddam-Resume.pdf` | The downloadable resume |
+| `script.js` / `styles.css` | Interactions (modals, lightbox, animations) and styles |
+| `scripts/make-og.js` | Generates `og-card.jpg`, the link-preview image |
 
-## Local Development
+## Run locally
 
-### Client
-
-```
-cd client
+```sh
 npm install
-npm run dev
+npm run dev   # serves on http://localhost:8080
 ```
-
-### Server
-
-```
-cd server
-npm install
-npm run dev
-```
-
-The client will request `/api/status` and `/api/contact` from the server.
-
-## Deployment Notes
-
-- GitHub Pages can host the static React build.
-- The Node server should be deployed separately (Render, Railway, Fly, etc.).
-

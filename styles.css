@@ -657,6 +657,11 @@ a:hover { color: var(--accent); }
     margin-bottom: 28px;
 }
 
+.proof-card.proof-card--lead {
+    grid-column: 1 / -1;
+    border-color: var(--border-accent);
+}
+
 .proof-card {
     display: block;
     padding: 20px;

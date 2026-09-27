@@ -5,3 +5,4 @@ node_modules
 CLAUDE.md
 ruflo-skill.md
 dispatch-dashboard.png
+.playwright-mcp/
