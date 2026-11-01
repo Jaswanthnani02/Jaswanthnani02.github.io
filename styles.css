@@ -226,10 +226,10 @@ kbd {
 .dg-head { fill: #ffffff55; }
 
 /* ---------- Stack ---------- */
-.stack { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin-top: 16px; }
+.stack { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 32px; margin-top: 16px; }
 .stack-h { font: 12px/18px var(--mono); color: var(--fg-3); margin: 0 0 6px; }
 .stack ul { list-style: none; margin: 0; padding: 0; }
-.stack li { display: flex; align-items: center; gap: 10px; height: 32px; font-size: 13px; white-space: nowrap; color: var(--fg-2); border-bottom: 1px solid var(--line-subtle); }
+.stack li { display: flex; align-items: center; gap: 10px; min-height: 32px; font-size: 13px; color: var(--fg-2); border-bottom: 1px solid var(--line-subtle); }
 .stack li:last-child { border-bottom: 0; }
 .stack li img { width: 18px; height: 18px; flex: none; }
 
@@ -320,9 +320,6 @@ a.sb-item:hover, button.sb-item:hover { background: var(--bg-overlay); color: va
 
 /* ---------- Mobile ---------- */
 .mobilebar { display: none; }
-@media (max-width: 1100px) and (min-width: 901px) {
-  .stack { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
 @media (max-width: 900px) {
   .mobilebar {
     position: sticky; top: 0; z-index: 20;
