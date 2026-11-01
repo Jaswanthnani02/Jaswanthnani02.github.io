@@ -99,14 +99,13 @@ a:hover { text-decoration-color: var(--fg); }
 /* ---------- Hero ---------- */
 .hero { padding: clamp(3rem, 8vh, 6rem) 0 clamp(2.5rem, 6vh, 4rem); }
 .hero-inner { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
-.eyebrow { color: var(--accent); font-weight: 500; font-size: 0.95rem; margin-bottom: 1.25rem; }
-.hero h1 { font-size: clamp(2.25rem, 4.4vw, 4rem); line-height: 1.08; letter-spacing: -0.035em; }
+.eyebrow { color: var(--fg-3); font-weight: 500; font-size: 0.95rem; margin-bottom: 1.25rem; }
+.hero h1 { font-size: clamp(2rem, 3.4vw, 3.1rem); line-height: 1.12; letter-spacing: -0.03em; }
 .hero-sub { font-size: clamp(1.05rem, 1.3vw, 1.25rem); line-height: 1.6; margin-top: 1.5rem; max-width: 38em; }
-.hero-photo { margin: 0; justify-self: end; width: 100%; max-width: 24rem; }
+.hero-photo { margin: 0; justify-self: end; width: 100%; max-width: 20rem; }
 .hero-photo img {
-  display: block; width: 100%; height: auto; aspect-ratio: 684 / 748; object-fit: cover;
-  border-radius: 1.25rem; border: 1px solid var(--line);
-  box-shadow: 0 30px 80px -30px #000;
+  display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%;
+  border-radius: 0.75rem; border: 1px solid var(--line);
 }
 
 .stats {
@@ -120,7 +119,7 @@ a:hover { text-decoration-color: var(--fg); }
 .stats dd { margin: 0 0 0.25rem; font-size: clamp(1.75rem, 2.6vw, 2.5rem); font-weight: 600; color: var(--fg); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
 
 /* ---------- Sections ---------- */
-.section { padding: clamp(3.5rem, 9vh, 7rem) 0; border-top: 1px solid var(--line); }
+.section { padding: clamp(3rem, 7vh, 5.5rem) 0; border-top: 1px solid var(--line); }
 .section--tight { padding-bottom: clamp(2.5rem, 6vh, 4rem); }
 .section-head { max-width: 44rem; margin-bottom: clamp(2rem, 5vh, 3rem); }
 .section-head h2 { font-size: clamp(1.75rem, 2.8vw, 2.5rem); line-height: 1.15; }
@@ -135,8 +134,7 @@ a:hover { text-decoration-color: var(--fg); }
 .project + .project { border-top: 1px solid var(--line); }
 .project--stack { grid-template-columns: minmax(0, 1fr); }
 .project--stack .project-text { max-width: 46rem; }
-.project-tag { font-size: 0.85rem; font-weight: 500; color: var(--accent); margin-bottom: 0.5rem; }
-.tag-warn { color: var(--warn); }
+.project-tag { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.02em; color: var(--fg-3); margin-bottom: 0.5rem; }
 .project h3 { font-size: clamp(1.5rem, 2.2vw, 2rem); line-height: 1.2; margin-bottom: 1rem; }
 .project-result { font-size: 1.15rem; color: var(--fg); line-height: 1.55; }
 .project-result strong { color: var(--accent); font-weight: 600; }
@@ -149,7 +147,9 @@ a:hover { text-decoration-color: var(--fg); }
   background: var(--bg-2); border: 1px solid var(--line); border-radius: 999px;
 }
 .logos img { width: 1.1rem; height: 1.1rem; flex: none; }
-.card .logos li { background: var(--bg); font-size: 0.8rem; }
+.card .logos { gap: 0.4rem 1.1rem; margin-top: 1rem; }
+.card .logos li { background: none; border: 0; padding: 0; font-size: 0.85rem; color: var(--fg-3); }
+.card .logos img { width: 0.95rem; height: 0.95rem; }
 
 .panel { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--r); box-shadow: inset 0 1px 0 #ffffff0a; }
 
@@ -190,7 +190,6 @@ a:hover { text-decoration-color: var(--fg); }
 /* ---------- Cards ---------- */
 .cards, .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
 .cards { margin-top: clamp(1.5rem, 4vh, 2.5rem); }
-.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
 .card {
   display: block; padding: clamp(1.25rem, 2.5vw, 1.75rem);
   background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--r);
@@ -200,6 +199,19 @@ a:hover { text-decoration-color: var(--fg); }
 .card:hover { border-color: var(--line-2); }
 .card h3 { font-size: 1.2rem; line-height: 1.3; margin-bottom: 0.6rem; }
 .card p { font-size: 0.95rem; }
+
+/* Lower work items: a plain 2x2 list, so the two main projects lead */
+.more { gap: 0 3rem; }
+.more .card { background: none; border: 0; border-top: 1px solid var(--line); border-radius: 0; box-shadow: none; padding: 1.5rem 0; }
+
+/* ---------- How I build ---------- */
+.approach { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4rem); }
+.col-h { font-size: 0.85rem; font-weight: 500; letter-spacing: 0.02em; color: var(--fg-3); margin-bottom: 0.5rem; }
+.approach ol { list-style: none; margin: 0; padding: 0; counter-reset: n; }
+.approach li { counter-increment: n; position: relative; padding: 1.25rem 0 1.25rem 2.25rem; border-top: 1px solid var(--line); }
+.approach li::before { content: counter(n); position: absolute; left: 0; top: 1.3rem; font-size: 0.9rem; font-weight: 600; color: var(--fg-3); font-variant-numeric: tabular-nums; }
+.approach h3 { font-size: 1.1rem; line-height: 1.35; margin-bottom: 0.4rem; }
+.approach p { font-size: 0.95rem; }
 
 /* ---------- Experience ---------- */
 .timeline { list-style: none; margin: 0; padding: 0; }
@@ -219,9 +231,13 @@ a:hover { text-decoration-color: var(--fg); }
 .cred-link:hover h3 { color: var(--accent); }
 
 /* ---------- Skills ---------- */
-.skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); gap: 2rem 2.5rem; }
-.skills h3 { font-size: 1.05rem; }
-.skills .logos { margin-top: 0.75rem; }
+.skills { display: grid; }
+.skill-row { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 1.5rem; padding: 1.25rem 0; border-top: 1px solid var(--line); }
+.skill-row:first-child { border-top: 0; padding-top: 0; }
+.skill-row h3 { font-size: 1rem; padding-top: 0.4rem; }
+.skills .logos { margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr)); gap: 0 1.5rem; }
+.skills .logos li { background: none; border: 0; border-radius: 0; padding: 0.45rem 0; font-size: 0.925rem; color: var(--fg-2); }
+.skills .logos img { width: 1.15rem; height: 1.15rem; }
 
 /* ---------- Conference ticker ---------- */
 .ticker {
@@ -288,7 +304,6 @@ a:hover { text-decoration-color: var(--fg); }
 /* ---------- Tablets ---------- */
 @media (max-width: 960px) {
   .project { grid-template-columns: minmax(0, 1fr); }
-  .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .stats > div:nth-child(3) { padding-left: 0; border-left: 0; }
   .stats > div:nth-child(n+3) { border-top: 1px solid var(--line); }
@@ -302,7 +317,10 @@ a:hover { text-decoration-color: var(--fg); }
   .hero-inner { grid-template-columns: minmax(0, 1fr); }
   .hero-photo { order: -1; justify-self: start; max-width: 9rem; }
   .hero-photo img { border-radius: 1rem; }
-  .cards, .grid-2, .grid-3 { grid-template-columns: minmax(0, 1fr); }
+  .cards, .grid-2, .approach { grid-template-columns: minmax(0, 1fr); }
+  .skill-row { grid-template-columns: minmax(0, 1fr); gap: 0.5rem; }
+  .skills .logos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1rem; }
+  .skills .logos li { font-size: 0.875rem; }
   .stats > div { padding: 1.1rem 0; }
   .stats > div + div { padding-left: 1rem; }
   .stats > div:nth-child(3) { padding-left: 0; }
