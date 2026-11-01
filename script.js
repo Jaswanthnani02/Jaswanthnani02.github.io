@@ -119,3 +119,60 @@
     }, { threshold: 0.4 }).observe(root);
   }
 })();
+
+// ---------- Thank-you card ----------
+// Shows a small card after 15 seconds of attention: the tab is visible and the
+// visitor has scrolled, clicked, or pressed a key. It shows once per visitor
+// per 30 days, and never after the visitor opens LinkedIn or email from it.
+(function thankYouCard() {
+  const card = document.getElementById('hello');
+  if (!card) return;
+
+  const KEY = 'jg-hello-seen';
+  const WAIT_MS = 15000;
+  const QUIET_DAYS = 30;
+
+  const read = () => { try { return Number(localStorage.getItem(KEY)) || 0; } catch (e) { return 0; } };
+  const write = () => { try { localStorage.setItem(KEY, String(Date.now())); } catch (e) { /* storage blocked */ } };
+
+  const params = new URLSearchParams(location.search);
+  const force = params.has('hello');
+  if (!force && Date.now() - read() < QUIET_DAYS * 864e5) return;
+
+  // A visitor who already went to LinkedIn does not need the card.
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href*="linkedin.com"]');
+    if (a && !card.contains(a)) { write(); cancel(); }
+  });
+
+  let engaged = force;
+  let visibleMs = 0;
+  let last = performance.now();
+  let timer = null;
+  const markEngaged = () => { engaged = true; };
+  ['scroll', 'pointerdown', 'keydown', 'touchstart'].forEach(t => window.addEventListener(t, markEngaged, { passive: true, once: true }));
+
+  function tick() {
+    const now = performance.now();
+    if (!document.hidden) visibleMs += now - last;
+    last = now;
+    if (engaged && visibleMs >= (force ? 0 : WAIT_MS)) { cancel(); show(); }
+  }
+  function cancel() { clearInterval(timer); timer = null; }
+
+  function show() {
+    write();
+    card.hidden = false;
+    requestAnimationFrame(() => requestAnimationFrame(() => card.classList.add('is-in')));
+  }
+  function hide() {
+    card.classList.remove('is-in');
+    setTimeout(() => { card.hidden = true; }, 350);
+  }
+
+  card.querySelectorAll('[data-hello-close]').forEach(b => b.addEventListener('click', hide));
+  card.querySelectorAll('[data-hello-done]').forEach(a => a.addEventListener('click', () => setTimeout(hide, 300)));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !card.hidden) hide(); });
+
+  timer = setInterval(tick, 500);
+})();
