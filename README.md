@@ -6,22 +6,26 @@ Portfolio site for **Jaswanth Gaddam**, Cloud and AI Solutions Engineer (Chicago
 
 ## What's on it
 
-- **Work:** Azure Functions ticket dispatcher (100k+ tickets auto-assigned), MCP tool servers with RBAC, a Cosmos DB ops dashboard, and n8n onboarding automation
-- **Proof:** links to the public [architecture case study](https://github.com/Jaswanthnani02/client-intelligence-platform) and demo repos, plus a redacted architecture diagram and dashboard mock
-- **Certifications, conferences, education, and contact**
+- **Work:** the ticket dispatcher (100,000+ tickets assigned), the client intelligence platform (MCP tools with per-call authorization), the operations dashboard, n8n onboarding, and doc-link-check
+- **A live model** of the dispatcher's two assignment rules, and an inline SVG architecture diagram drawn from the [case study](https://github.com/Jaswanthnani02/client-intelligence-platform)
+- **Decisions and incidents** taken from the case study, then stack, history, certification, and contact
+- Keyboard shortcuts: `E` email, `R` resume, `G` then `W/S/D/I/H` to go to a section, `?` for the list
 
 ## Stack
 
-Plain HTML, CSS, and JavaScript. No build step. GSAP and Three.js load from a CDN for motion and the background canvas.
+Plain HTML, CSS, and a little JavaScript. No framework, no build step, no tracking.
 GitHub Actions deploys `main` to GitHub Pages (`.github/workflows/static.yml`).
 
-| File | Purpose |
+| Path | Purpose |
 | --- | --- |
 | `index.html` | The portfolio |
-| `resume.html` / `resume.md` | The resume as a web page and as Markdown |
-| `Jaswanth-Gaddam-Resume.pdf` | The downloadable resume |
-| `script.js` / `styles.css` | Interactions (modals, lightbox, animations) and styles |
-| `scripts/make-og.js` | Generates `og-card.jpg`, the link-preview image |
+| `styles.css` / `script.js` | Dark theme, clock, shortcuts, dispatcher model, image zoom |
+| `resume.html` / `Jaswanth-Gaddam-Resume.pdf` | The resume as a web page and as a PDF |
+| `fonts/` | Geist and Geist Mono (SIL Open Font License, `fonts/OFL.txt`) |
+| `icons/` | Technology logos: Microsoft Azure architecture icons, svg-logos (CC0), VS Code icons (MIT) |
+| `scripts/make-og.js` | Renders `scripts/og-card.html` to `og-card.png`, the link preview |
+
+Colors follow Radix Colors (gray-dark, green-dark). Radii follow GitHub Primer.
 
 ## Run locally
 
@@ -29,3 +33,5 @@ GitHub Actions deploys `main` to GitHub Pages (`.github/workflows/static.yml`).
 npm install
 npm run dev   # serves on http://localhost:8080
 ```
+
+Serve over HTTP, not `file://`, so the fonts load.
