@@ -41,6 +41,7 @@
     <a class="nav-name" href="#top">Jaswanth Gaddam</a>
     <nav class="nav-links" aria-label="Sections">
       <a href="#work">Work</a>
+      <a href="#lab">Try it</a>
       <a href="#approach">Approach</a>
       <a href="#experience">Experience</a>
       <a href="#skills">Skills</a>
@@ -198,11 +199,10 @@
           <ul class="logos logos--small"><li><img src="icons/n8n.svg" alt="">n8n</li><li><img src="icons/microsoft.svg" alt="">Microsoft Graph</li></ul>
         </article>
         <article class="card">
-          <p class="project-tag">Open source</p>
-          <h3>doc-link-check</h3>
-          <p>I moved 50 documents and about 30 links broke with no error. This tool finds broken links in Markdown files. It runs in CI and has 38 tests.</p>
-          <ul class="logos logos--small"><li><img src="icons/python.svg" alt="">Python</li><li><img src="icons/github-actions.svg" alt="">GitHub Actions</li></ul>
-          <a class="link" href="https://github.com/Jaswanthnani02/doc-link-check" rel="noopener">View on GitHub →</a>
+          <p class="project-tag">BetterWorld Technology · In progress</p>
+          <h3>Agentic IT operations platform</h3>
+          <p>An autonomous platform that combines n8n, Claude, React Flow, and MCP integrations. Version 1 sorts and answers first-level tickets, so fewer tickets reach a technician.</p>
+          <ul class="logos logos--small"><li><img src="icons/n8n.svg" alt="">n8n</li><li><img src="icons/claude.svg" alt="">Claude</li><li><img src="icons/react.svg" alt="">React Flow</li><li><img src="icons/mcp.svg" alt="">MCP</li></ul>
         </article>
         <article class="card">
           <p class="project-tag">Nexturn</p>
@@ -211,6 +211,123 @@
           <ul class="logos logos--small"><li><img src="icons/spark.svg" alt="">PySpark</li><li><img src="icons/postgresql.svg" alt="">PostgreSQL</li><li><img src="icons/tableau.svg" alt="">Tableau</li></ul>
         </article>
       </div>
+    </div>
+  </section>
+
+  <section class="section" id="lab" aria-labelledby="lab-h">
+    <div class="wrap">
+      <header class="section-head">
+        <h2 id="lab-h">Try it: how the systems work</h2>
+        <p>These three demos run in your browser on mock data. They show the same patterns that run in production at BetterWorld Technology.</p>
+      </header>
+
+      <div class="lab panel">
+        <div class="lab-tabs" role="tablist" aria-label="Demos">
+          <button type="button" role="tab" id="tab-mcp" aria-controls="pane-mcp" aria-selected="true">MCP and role-based access</button>
+          <button type="button" role="tab" id="tab-cosmos" aria-controls="pane-cosmos" aria-selected="false" tabindex="-1">Cosmos DB from many sources</button>
+          <button type="button" role="tab" id="tab-kv" aria-controls="pane-kv" aria-selected="false" tabindex="-1">Azure Functions and Key Vault</button>
+        </div>
+
+        <!-- MCP + RBAC -->
+        <div class="lab-pane" role="tabpanel" id="pane-mcp" aria-labelledby="tab-mcp">
+          <p class="lab-intro">An AI assistant calls a tool on my MCP server. The server checks every call on two axes: the <b>role</b> of the user and the <b>clients</b> that the user can see. A new tool is locked to admins until a person opens it on purpose.</p>
+          <div class="lab-grid">
+            <form class="lab-form" id="mcpForm">
+              <label>User role
+                <select id="mcpRole">
+                  <option value="viewer">Viewer (account manager)</option>
+                  <option value="technician" selected>Technician</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </label>
+              <label>Clients this user can see
+                <select id="mcpScope">
+                  <option value="contoso" selected>Contoso only</option>
+                  <option value="fabrikam">Fabrikam only</option>
+                  <option value="both">Contoso and Fabrikam</option>
+                </select>
+              </label>
+              <label>Tool
+                <select id="mcpTool">
+                  <option value="list_open_tickets" selected>list_open_tickets</option>
+                  <option value="get_device_health">get_device_health</option>
+                  <option value="create_ticket">create_ticket</option>
+                  <option value="export_all_clients">export_all_clients (new tool)</option>
+                </select>
+              </label>
+              <label>Client in the request
+                <select id="mcpClient">
+                  <option value="contoso" selected>Contoso</option>
+                  <option value="fabrikam">Fabrikam</option>
+                </select>
+              </label>
+              <button type="submit" class="btn btn-primary">Send tool call</button>
+            </form>
+            <div class="lab-out">
+              <p class="lab-label">Request (JSON-RPC)</p>
+              <pre class="code" id="mcpReq"></pre>
+              <p class="lab-label">Server checks</p>
+              <ol class="checks" id="mcpChecks"><li class="muted-li">Send a tool call to see the checks.</li></ol>
+              <p class="lab-label">Response</p>
+              <pre class="code" id="mcpRes"></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cosmos DB ingestion -->
+        <div class="lab-pane" role="tabpanel" id="pane-cosmos" aria-labelledby="tab-cosmos" hidden>
+          <p class="lab-intro">Scheduled jobs copy four source systems into one Cosmos DB container, partitioned by client. Each source keeps a watermark. The watermark stays a little behind on purpose, so runs overlap and no late update is lost. Upserts are idempotent, so the overlap never makes duplicates.</p>
+          <div class="lab-actions">
+            <button type="button" class="btn btn-primary" id="cosRun">Run sync</button>
+            <button type="button" class="btn" id="cosEdit">Change a ticket in the PSA</button>
+            <button type="button" class="btn" id="cosReset">Reset</button>
+          </div>
+          <div class="table-scroll">
+            <table class="lab-table">
+              <thead><tr><th scope="col">Source</th><th scope="col">Watermark</th><th scope="col">Read</th><th scope="col">Created</th><th scope="col">Updated</th></tr></thead>
+              <tbody id="cosRows"></tbody>
+            </table>
+          </div>
+          <p class="lab-status" id="cosStatus">Container <code>clients</code>, partition key <code>/clientId</code>. Documents: <b id="cosCount">0</b>.</p>
+          <p class="lab-label">Last document written</p>
+          <pre class="code" id="cosDoc">{}</pre>
+        </div>
+
+        <!-- Functions + Key Vault -->
+        <div class="lab-pane" role="tabpanel" id="pane-kv" aria-labelledby="tab-kv" hidden>
+          <p class="lab-intro">The dispatcher is a timer-triggered Azure Function. It does not keep the ConnectWise API key in code or in settings. It gets the key from Azure Key Vault with its managed identity.</p>
+          <div class="lab-grid lab-grid--code">
+<pre class="code code--lg"><span class="c"># function_app.py  (Azure Functions, Python v2 model)</span>
+<span class="k">import</span> os
+<span class="k">import</span> azure.functions <span class="k">as</span> func
+<span class="k">from</span> azure.identity <span class="k">import</span> DefaultAzureCredential
+<span class="k">from</span> azure.keyvault.secrets <span class="k">import</span> SecretClient
+
+app = func.FunctionApp()
+
+<span class="c"># In Azure this uses the Function App's managed identity.</span>
+<span class="c"># On a laptop it uses your Azure CLI sign-in. No secret in code.</span>
+credential = DefaultAzureCredential()
+vault = SecretClient(os.environ[<span class="s">"KEY_VAULT_URL"</span>], credential)
+
+@app.timer_trigger(schedule=<span class="s">"0 */2 * * * *"</span>, arg_name=<span class="s">"timer"</span>)
+<span class="k">def</span> <span class="f">dispatch</span>(timer: func.TimerRequest) -&gt; <span class="k">None</span>:
+    api_key = vault.get_secret(<span class="s">"connectwise-api-key"</span>).value
+    tickets = fetch_new_tickets(api_key)
+    <span class="k">for</span> ticket <span class="k">in</span> tickets:
+        board = select_board(ticket)
+        tech = pick_technician(board, rule=<span class="s">"weighted_load"</span>)
+        assign(ticket, tech, api_key)</pre>
+            <ol class="steps">
+              <li><b>Turn on a managed identity</b> for the Function App. Azure gives the app its own identity in Microsoft Entra ID.</li>
+              <li><b>Give it one role:</b> "Key Vault Secrets User" on that vault only. It can read secrets. It cannot change them.</li>
+              <li><b>Store only the vault URL</b> in app settings. Or use a Key Vault reference: <code>@Microsoft.KeyVault(SecretUri=…)</code>.</li>
+              <li><b>Rotate the key in Key Vault.</b> The function reads the new value. No code change and no new deployment.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <p class="lab-foot">Runnable code: <a href="https://github.com/Jaswanthnani02/mcp-rbac-demo" rel="noopener">mcp-rbac-demo</a> · <a href="https://github.com/Jaswanthnani02/ticket-dispatcher-demo" rel="noopener">ticket-dispatcher-demo</a> · <a href="https://github.com/Jaswanthnani02/client-intelligence-platform" rel="noopener">architecture case study</a></p>
     </div>
   </section>
 
