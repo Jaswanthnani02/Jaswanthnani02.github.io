@@ -47,7 +47,6 @@
     <div class="rail-id">
       <img src="profile.jpg" alt="" width="36" height="36">
       <div>
-        <p class="rail-name">Jaswanth Gaddam</p>
         <p class="rail-role">cloud + ai engineer</p>
       </div>
     </div>
@@ -86,20 +85,18 @@
     </header>
 
     <section id="work" class="sec" aria-labelledby="work-h">
-      <h2 class="sec-h" id="work-h">Work</h2>
+      <div class="sec-h"><h2 id="work-h">Work</h2></div>
 
       <details class="item" open>
         <summary>
           <span class="item-title">Ticket dispatcher</span>
-          <span class="item-logos" aria-hidden="true"><img src="icons/azure-functions.svg" alt=""><img src="icons/python.svg" alt=""><img src="icons/blob-storage.svg" alt=""></span>
           <span class="item-metric">100,000+ tickets</span>
         </summary>
         <div class="item-body">
-          <p class="item-lead">Assigned 100,000+ tickets in six months. No person sorts the queue now.</p>
           <dl class="kv">
             <dt>problem</dt><dd>Dispatchers sorted each new ticket by hand. Some technicians got too much work. Others got too little.</dd>
             <dt>solution</dt><dd>An Azure Function reads new tickets from the ConnectWise API and selects the correct board. It gives each ticket to a technician by turn (round-robin) or by current workload (weighted load).</dd>
-            <dt>stack</dt><dd class="mono">azure functions · python · connectwise rest api · blob storage</dd>
+            <dt>stack</dt><dd class="mono stack-inline"><span><img src="icons/azure-functions.svg" alt="">azure functions</span><span><img src="icons/python.svg" alt="">python</span><span>connectwise rest api</span><span><img src="icons/blob-storage.svg" alt="">blob storage</span></dd>
           </dl>
 
           <div class="surface sim" id="sim">
@@ -127,7 +124,6 @@
       <details class="item" open>
         <summary>
           <span class="item-title">Client intelligence platform</span>
-          <span class="item-logos" aria-hidden="true"><img src="icons/cosmos-db.svg" alt=""><img src="icons/mcp.svg" alt=""><img src="icons/container-apps.svg" alt=""><img src="icons/ai-search.svg" alt=""></span>
           <span class="item-metric">~35 tools</span>
         </summary>
         <div class="item-body">
@@ -135,6 +131,7 @@
           <dl class="kv">
             <dt>problem</dt><dd>Client data was in four systems: tickets, devices, documents, and surveys. To prepare for a meeting, a person opened all four and joined the data by hand.</dd>
             <dt>solution</dt><dd>21 scheduled jobs copy the data into one store. A read-only service gives about 35 tools to a language model. Each call checks the user's role and the clients the user can see.</dd>
+            <dt>stack</dt><dd class="mono stack-inline"><span><img src="icons/cosmos-db.svg" alt="">cosmos db</span><span><img src="icons/mcp.svg" alt="">mcp</span><span><img src="icons/container-apps.svg" alt="">container apps</span><span><img src="icons/ai-search.svg" alt="">ai search</span><span><img src="icons/python.svg" alt="">python</span></dd>
             <dt>scale</dt><dd class="mono">~16 collections · ~1,200 tests · data 5–15 min old at most</dd>
           </dl>
 
@@ -179,7 +176,6 @@
       <details class="item">
         <summary>
           <span class="item-title">Operations dashboard</span>
-          <span class="item-logos" aria-hidden="true"><img src="icons/container-apps.svg" alt=""><img src="icons/redis.svg" alt=""><img src="icons/ai-foundry.svg" alt=""></span>
           <span class="item-metric">weekly reports</span>
         </summary>
         <div class="item-body">
@@ -187,7 +183,7 @@
           <dl class="kv">
             <dt>problem</dt><dd>Leaders did not know why some tickets stayed open.</dd>
             <dt>solution</dt><dd>A web dashboard with a Redis cache. An AI model reads ticket notes and tells why work stopped. The same data makes the weekly and monthly reports.</dd>
-            <dt>stack</dt><dd class="mono">container apps · redis · azure ai foundry · cosmos db</dd>
+            <dt>stack</dt><dd class="mono stack-inline"><span><img src="icons/container-apps.svg" alt="">container apps</span><span><img src="icons/redis.svg" alt="">redis</span><span><img src="icons/ai-foundry.svg" alt="">azure ai foundry</span><span><img src="icons/cosmos-db.svg" alt="">cosmos db</span></dd>
           </dl>
         </div>
       </details>
@@ -195,7 +191,6 @@
       <details class="item">
         <summary>
           <span class="item-title">New-hire onboarding</span>
-          <span class="item-logos" aria-hidden="true"><img src="icons/n8n.svg" alt=""><img src="icons/microsoft.svg" alt=""></span>
           <span class="item-metric">5 days → 10 min</span>
         </summary>
         <div class="item-body">
@@ -203,7 +198,7 @@
           <dl class="kv">
             <dt>problem</dt><dd>IT staff set up each new employee by hand: licenses, accounts, apps, manager, and calendar.</dd>
             <dt>solution</dt><dd>One n8n flow with approval steps. It does all the setup through Microsoft Graph. Then it sends the welcome email.</dd>
-            <dt>stack</dt><dd class="mono">n8n · microsoft graph · microsoft 365</dd>
+            <dt>stack</dt><dd class="mono stack-inline"><span><img src="icons/n8n.svg" alt="">n8n</span><span><img src="icons/microsoft.svg" alt="">microsoft graph</span><span>microsoft 365</span></dd>
           </dl>
         </div>
       </details>
@@ -211,14 +206,13 @@
       <details class="item">
         <summary>
           <span class="item-title">doc-link-check</span>
-          <span class="item-logos" aria-hidden="true"><img src="icons/python.svg" alt=""><img src="icons/github.svg" alt=""></span>
           <span class="item-metric">open source</span>
         </summary>
         <div class="item-body">
           <p class="item-lead">A tool that finds broken links in Markdown. It runs in CI and has 38 tests.</p>
           <dl class="kv">
             <dt>why</dt><dd>I moved 50 documents and about 30 links broke with no error. This tool makes sure that it cannot occur again.</dd>
-            <dt>stack</dt><dd class="mono">python · no dependencies · github actions</dd>
+            <dt>stack</dt><dd class="mono stack-inline"><span><img src="icons/python.svg" alt="">python</span><span><img src="icons/github.svg" alt="">github actions</span><span>no dependencies</span></dd>
           </dl>
           <p class="item-links"><a href="https://github.com/Jaswanthnani02/doc-link-check" rel="noopener">doc-link-check ↗</a></p>
         </div>
@@ -227,21 +221,20 @@
       <details class="item">
         <summary>
           <span class="item-title">Data pipelines at Nexturn</span>
-          <span class="item-logos" aria-hidden="true"><img src="icons/spark.svg" alt=""><img src="icons/postgresql.svg" alt=""><img src="icons/tableau.svg" alt=""></span>
           <span class="item-metric">2022–2023</span>
         </summary>
         <div class="item-body">
           <p class="item-lead">Payment reconciliation and ETL pipelines for client projects.</p>
           <dl class="kv">
             <dt>work</dt><dd>I moved Splunk data with PySpark and compared payments in PostgreSQL. I built Matillion ETL pipelines and wrote down each data flow. I made reports in Tableau and Power BI.</dd>
-            <dt>stack</dt><dd class="mono">pyspark · postgresql · matillion · tableau · power bi</dd>
+            <dt>stack</dt><dd class="mono stack-inline"><span><img src="icons/spark.svg" alt="">pyspark</span><span><img src="icons/postgresql.svg" alt="">postgresql</span><span>matillion</span><span><img src="icons/tableau.svg" alt="">tableau</span><span><img src="icons/power-bi.svg" alt="">power bi</span></dd>
           </dl>
         </div>
       </details>
     </section>
 
     <section id="stack" class="sec" aria-labelledby="stack-h">
-      <h2 class="sec-h" id="stack-h">Stack</h2>
+      <div class="sec-h"><h2 id="stack-h">Stack</h2></div>
       <div class="stack">
         <div>
           <p class="stack-h">cloud</p>
@@ -280,8 +273,7 @@
     </section>
 
     <section id="decisions" class="sec" aria-labelledby="dec-h">
-      <h2 class="sec-h" id="dec-h">Decisions I will defend</h2>
-      <p class="sec-note">From the client intelligence platform. <a href="https://github.com/Jaswanthnani02/client-intelligence-platform/tree/main/docs/decisions" rel="noopener">Full records ↗</a></p>
+      <div class="sec-h"><h2 id="dec-h">Decisions I will defend</h2><a href="https://github.com/Jaswanthnani02/client-intelligence-platform/tree/main/docs/decisions" rel="noopener">full records ↗</a></div>
       <ol class="decisions">
         <li>
           <span class="id">D-01</span>
@@ -308,9 +300,9 @@
     </section>
 
     <section id="incidents" class="sec" aria-labelledby="inc-h">
-      <h2 class="sec-h" id="inc-h">Incidents</h2>
-      <p class="sec-note">Four of my five worst production failures gave no error. <a href="https://github.com/Jaswanthnani02/client-intelligence-platform/blob/main/docs/incidents.md" rel="noopener">Full reports ↗</a></p>
-      <div class="surface table-wrap">
+      <div class="sec-h"><h2 id="inc-h">Incidents</h2><a href="https://github.com/Jaswanthnani02/client-intelligence-platform/blob/main/docs/incidents.md" rel="noopener">full reports ↗</a></div>
+      <p class="sec-note">Four of my five worst production failures gave no error.</p>
+      <div class="table-wrap">
         <table class="table">
           <thead>
             <tr><th scope="col">id</th><th scope="col">what broke</th><th scope="col">why nobody saw it</th><th scope="col">what I changed</th></tr>
@@ -340,7 +332,7 @@
     </section>
 
     <section id="history" class="sec" aria-labelledby="his-h">
-      <h2 class="sec-h" id="his-h">History</h2>
+      <div class="sec-h"><h2 id="his-h">History</h2></div>
       <ol class="timeline">
         <li>
           <span class="when">2025-10 → now</span>
