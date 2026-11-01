@@ -1,6 +1,6 @@
 // Jaswanth Gaddam — portfolio
-// Small parts: a Chicago clock, image zoom, keyboard shortcuts, the active
-// section in the rail, and a model of the ticket dispatcher.
+// Small parts: a Chicago clock, keyboard shortcuts, the active section in
+// the rail, and a model of the ticket dispatcher. The conference ticker is CSS only.
 
 // ---------- Chicago clock ----------
 (function clock() {
@@ -12,23 +12,6 @@
   const tick = () => { el.textContent = fmt.format(new Date()).toLowerCase(); };
   tick();
   setInterval(tick, 30000);
-})();
-
-// ---------- Image zoom ----------
-(function zoom() {
-  const dlg = document.getElementById('zoom');
-  if (!dlg || typeof dlg.showModal !== 'function') return;
-  const img = document.getElementById('zoomImg');
-  const cap = document.getElementById('zoomCap');
-  document.querySelectorAll('[data-zoom]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      img.src = btn.dataset.zoom;
-      img.alt = btn.dataset.caption || '';
-      cap.textContent = btn.dataset.caption || '';
-      dlg.showModal();
-    });
-  });
-  dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
 })();
 
 // ---------- Dispatcher model ----------
@@ -195,63 +178,3 @@
   links.forEach(a => { const s = document.getElementById(a.dataset.nav); if (s) io.observe(s); });
 })();
 
-// ---------- Conference slideshow ----------
-// Shows the three photos in a loop. Pauses on hover, on focus, and when the
-// tab is hidden. Does not play by itself if the reader asked for reduced motion.
-(function slideshow() {
-  const root = document.getElementById('show');
-  if (!root) return;
-  const slides = [...root.querySelectorAll('.slide')];
-  const cap = document.getElementById('showCap');
-  const idx = document.getElementById('showIdx');
-  const bar = document.getElementById('showBar');
-  const playBtn = document.getElementById('showPlay');
-  const DURATION = 5000;
-  let i = 0, timer = null, started = 0, held = false;
-  let playing = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function show(n) {
-    slides[i].classList.remove('is-on');
-    slides[i].setAttribute('aria-hidden', 'true');
-    slides[i].querySelector('button').tabIndex = -1;
-    i = (n + slides.length) % slides.length;
-    const s = slides[i];
-    s.classList.add('is-on');
-    s.removeAttribute('aria-hidden');
-    s.querySelector('button').tabIndex = 0;
-    const img = s.querySelector('img');
-    if (img.loading === 'lazy') img.loading = 'eager';
-    cap.textContent = s.querySelector('button').dataset.caption;
-    idx.textContent = i + 1;
-    restart();
-  }
-
-  function frame() {
-    if (!timer) return;
-    const p = Math.min(1, (performance.now() - started) / DURATION);
-    bar.style.width = (p * 100) + '%';
-    if (p >= 1) { show(i + 1); return; }
-    timer = requestAnimationFrame(frame);
-  }
-  function restart() {
-    cancelAnimationFrame(timer); timer = null;
-    bar.style.width = '0';
-    if (playing && !held && !document.hidden) { started = performance.now(); timer = requestAnimationFrame(frame); }
-  }
-  function setPlaying(v) {
-    playing = v;
-    playBtn.textContent = v ? '❚❚' : '▶';
-    playBtn.setAttribute('aria-label', v ? 'Pause slideshow' : 'Play slideshow');
-    restart();
-  }
-
-  document.getElementById('showPrev').addEventListener('click', () => show(i - 1));
-  document.getElementById('showNext').addEventListener('click', () => show(i + 1));
-  playBtn.addEventListener('click', () => setPlaying(!playing));
-  root.addEventListener('mouseenter', () => { held = true; restart(); });
-  root.addEventListener('mouseleave', () => { held = false; restart(); });
-  root.addEventListener('focusin', () => { held = true; restart(); });
-  root.addEventListener('focusout', () => { held = false; restart(); });
-  document.addEventListener('visibilitychange', restart);
-  setPlaying(playing);
-})();

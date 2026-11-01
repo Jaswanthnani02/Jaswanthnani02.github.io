@@ -262,23 +262,26 @@ kbd {
 .cert-row p { margin: 2px 0 0; }
 
 
-/* ---------- Conference slideshow ---------- */
-.sub-h { font: 500 13px/20px var(--sans); color: var(--fg-2); margin: 32px 0 10px; }
-.show { overflow: hidden; }
-.show-stage { position: relative; aspect-ratio: 16 / 9; background: #000; }
-.slide { position: absolute; inset: 0; margin: 0; opacity: 0; transition: opacity .8s ease; }
-.slide.is-on { opacity: 1; z-index: 1; }
-.slide button { display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
-.slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.show-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 8px 8px 14px; border-top: 1px solid var(--line-subtle); }
-.show-cap { margin: 0; font-size: 13px; color: var(--fg-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.show-ctrl { display: flex; align-items: center; gap: 2px; flex: none; }
-.show-count { color: var(--fg-3); margin-right: 8px; font-variant-numeric: tabular-nums; }
-.icon-btn { width: 28px; height: 28px; display: grid; place-items: center; padding: 0; font: 14px/1 var(--sans); color: var(--fg-2); background: transparent; border: 1px solid transparent; border-radius: var(--r-sm); cursor: pointer; transition: background-color var(--ease), color var(--ease); }
-.icon-btn:hover { background: var(--bg-overlay); color: var(--fg); }
-#showPlay { font-size: 9px; letter-spacing: -1px; }
-.show-progress { height: 2px; background: var(--line-subtle); }
-.show-progress span { display: block; height: 100%; width: 0; background: var(--accent); }
+/* ---------- Conference ticker ---------- */
+/* Two copies of the three photos move left without end, like a stock ticker.
+   Each photo keeps its full frame: fixed height, natural width, no crop. */
+.sub-h { font: 500 13px/20px var(--sans); color: var(--fg-2); margin: 32px 0 12px; }
+.ticker {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.ticker-track { display: flex; gap: 12px; width: max-content; animation: ticker 36s linear infinite; }
+.ticker:hover .ticker-track { animation-play-state: paused; }
+@keyframes ticker { to { transform: translateX(calc(-50% - 6px)); } }
+.tick { margin: 0; flex: none; }
+.tick img { display: block; height: 200px; width: auto; border-radius: var(--r-sm); border: 1px solid var(--line); background: var(--bg-raised); }
+.tick figcaption { margin-top: 8px; font: 12px/18px var(--mono); color: var(--fg-3); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) {
+  .ticker { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+  .ticker-track { animation: none; }
+  .tick[aria-hidden="true"] { display: none; }
+}
 
 /* ---------- Closing ---------- */
 .close { margin-top: 72px; padding: 48px 0 8px; border-top: 1px solid var(--line); text-align: center; }
@@ -315,8 +318,6 @@ a.sb-item:hover, button.sb-item:hover { background: var(--bg-overlay); color: va
 .keys { display: grid; grid-template-columns: auto 1fr; gap: 10px 20px; margin: 0; padding: 16px; font-size: 13px; }
 .keys dt { white-space: nowrap; }
 .keys dd { margin: 0; }
-.zoom { width: min(1100px, 94vw); }
-.zoom img { display: block; max-width: 100%; max-height: 80vh; margin: 0 auto; }
 
 /* ---------- Mobile ---------- */
 .mobilebar { display: none; }
@@ -341,6 +342,7 @@ a.sb-item:hover, button.sb-item:hover { background: var(--bg-overlay); color: va
   .kv dd { margin-bottom: 10px; }
   .stack { grid-template-columns: 1fr 1fr; gap: 16px 24px; }
   .close h2 { font-size: 22px; line-height: 28px; }
+  .tick img { height: 150px; }
   .btn-lg { width: 100%; }
   .decisions li { grid-template-columns: 1fr; gap: 0; }
   .timeline li { grid-template-columns: 1fr; gap: 0; }
@@ -353,5 +355,5 @@ a.sb-item:hover, button.sb-item:hover { background: var(--bg-overlay); color: va
   *, *::before, *::after { transition: none !important; }
 }
 @media print {
-  .statusbar, .rail, .mobilebar, .sim, .show, .dlg { display: none !important; }
+  .statusbar, .rail, .mobilebar, .sim, .ticker, .dlg { display: none !important; }
 }

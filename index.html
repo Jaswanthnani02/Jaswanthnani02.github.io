@@ -400,28 +400,33 @@
       </div>
 
       <h3 class="sub-h">Conferences</h3>
-      <div class="show surface" id="show" aria-roledescription="carousel" aria-label="Conference photos">
-        <div class="show-stage">
-          <figure class="slide is-on" aria-roledescription="slide" aria-label="1 of 3">
-            <button type="button" data-zoom="conference-google-cloud.jpg" data-caption="Google Cloud AI Live + Labs, Agentic Work" tabindex="0"><img src="conference-google-cloud.jpg" alt="Jaswanth at Google Cloud AI Live + Labs" width="1024" height="768"></button>
-          </figure>
-          <figure class="slide" aria-roledescription="slide" aria-label="2 of 3" aria-hidden="true">
-            <button type="button" data-zoom="conference-pax8-2026.jpg" data-caption="Pax8 Beyond 2026, BetterWorld Technology team" tabindex="-1"><img src="conference-pax8-2026.jpg" alt="BetterWorld Technology team at Pax8 Beyond 2026" width="1400" height="809" loading="lazy"></button>
-          </figure>
-          <figure class="slide" aria-roledescription="slide" aria-label="3 of 3" aria-hidden="true">
-            <button type="button" data-zoom="conference-pax8-mainstage.jpg" data-caption="Pax8 Beyond, main stage" tabindex="-1"><img src="conference-pax8-mainstage.jpg" alt="Jaswanth with colleagues at Pax8 Beyond main stage" width="1400" height="1050" loading="lazy"></button>
-          </figure>
+      <div class="ticker" aria-label="Conference photos">
+        <div class="ticker-track">
+            <figure class="tick">
+              <img src="conference-google-cloud.jpg" alt="Jaswanth at Google Cloud AI Live + Labs, Agentic Work" width="1024" height="768" decoding="async">
+              <figcaption>Google Cloud AI Live + Labs</figcaption>
+            </figure>
+            <figure class="tick">
+              <img src="conference-pax8-2026.jpg" alt="BetterWorld Technology team on stage at Pax8 Beyond 2026" width="1400" height="809" decoding="async">
+              <figcaption>Pax8 Beyond 2026 · BetterWorld Technology</figcaption>
+            </figure>
+            <figure class="tick">
+              <img src="conference-pax8-mainstage.jpg" alt="Jaswanth with colleagues at the Pax8 Beyond main stage" width="1400" height="1050" decoding="async">
+              <figcaption>Pax8 Beyond · main stage</figcaption>
+            </figure>
+            <figure class="tick" aria-hidden="true">
+              <img src="conference-google-cloud.jpg" alt="" width="1024" height="768" decoding="async">
+              <figcaption>Google Cloud AI Live + Labs</figcaption>
+            </figure>
+            <figure class="tick" aria-hidden="true">
+              <img src="conference-pax8-2026.jpg" alt="" width="1400" height="809" decoding="async">
+              <figcaption>Pax8 Beyond 2026 · BetterWorld Technology</figcaption>
+            </figure>
+            <figure class="tick" aria-hidden="true">
+              <img src="conference-pax8-mainstage.jpg" alt="" width="1400" height="1050" decoding="async">
+              <figcaption>Pax8 Beyond · main stage</figcaption>
+            </figure>
         </div>
-        <div class="show-bar">
-          <p class="show-cap" id="showCap" aria-live="polite">Google Cloud AI Live + Labs, Agentic Work</p>
-          <div class="show-ctrl">
-            <span class="show-count mono"><span id="showIdx">1</span> / 3</span>
-            <button type="button" class="icon-btn" id="showPrev" aria-label="Previous photo">‹</button>
-            <button type="button" class="icon-btn" id="showPlay" aria-label="Pause slideshow">❚❚</button>
-            <button type="button" class="icon-btn" id="showNext" aria-label="Next photo">›</button>
-          </div>
-        </div>
-        <div class="show-progress" aria-hidden="true"><span id="showBar"></span></div>
       </div>
     </section>
 
@@ -465,13 +470,6 @@
   </dl>
 </dialog>
 
-<dialog class="dlg zoom" id="zoom" aria-labelledby="zoomCap">
-  <div class="dlg-head">
-    <p id="zoomCap"></p>
-    <form method="dialog"><button class="btn btn-sm">Close</button></form>
-  </div>
-  <img id="zoomImg" alt="">
-</dialog>
 
 <script src="script.js" defer></script>
 </body>
