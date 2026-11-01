@@ -168,7 +168,7 @@
         </figure>
       </article>
 
-      <div class="cards">
+      <div class="cards more">
         <article class="card">
           <p class="project-tag">BetterWorld Technology</p>
           <h3>Operations dashboard</h3>
@@ -202,39 +202,25 @@
     <div class="wrap">
       <header class="section-head">
         <h2 id="approach-h">How I build</h2>
-        <p>Three decisions I will defend, and three lessons from production failures. <a href="https://github.com/Jaswanthnani02/client-intelligence-platform" rel="noopener">Full write-ups on GitHub</a>.</p>
+        <p>Three design decisions and three lessons from the client intelligence platform. <a href="https://github.com/Jaswanthnani02/client-intelligence-platform" rel="noopener">Full write-ups on GitHub</a>.</p>
       </header>
-      <div class="grid-3">
-        <article class="card">
-          <p class="project-tag">Decision</p>
-          <h3>Calculate scores on request. Do not save them.</h3>
-          <p>A saved health score became false when its data changed. I deleted the feature, although people liked it. Now the system saves raw numbers and calculates the score when a person asks.</p>
-        </article>
-        <article class="card">
-          <p class="project-tag">Decision</p>
-          <h3>Only one service can write data.</h3>
-          <p>The service that the AI model uses is read-only. If a number is wrong, only one part of the code can be the cause. Bad model output cannot change the records.</p>
-        </article>
-        <article class="card">
-          <p class="project-tag">Decision</p>
-          <h3>New tools are locked by default.</h3>
-          <p>Only the highest role can use a new tool until a person gives wider access. If someone forgets, nobody can use the tool. That is safer than everybody using it.</p>
-        </article>
-        <article class="card">
-          <p class="project-tag tag-warn">Lesson</p>
-          <h3>Alert on silence, not only on errors.</h3>
-          <p>An expired credential stopped all scheduled jobs for weeks. Nothing ran, so nothing logged an error. Now I alert when a job does not report.</p>
-        </article>
-        <article class="card">
-          <p class="project-tag tag-warn">Lesson</p>
-          <h3>Test the path that real users take.</h3>
-          <p>I tested a sign-in fix with a service key. Users signed in another way, and the fix did not work for them. Now I test each fix on the real user path.</p>
-        </article>
-        <article class="card">
-          <p class="project-tag tag-warn">Lesson</p>
-          <h3>Make rules executable.</h3>
-          <p>A comment said "keep these two values the same". Nobody read it, and a job stopped for two weeks. Now a test fails the build when the values do not agree.</p>
-        </article>
+      <div class="approach">
+        <div>
+          <h3 class="col-h">Decisions I will defend</h3>
+          <ol>
+          <li><h3>Calculate scores on request. Do not save them.</h3><p>A saved health score became false when its data changed. I deleted the feature, although people liked it. Now the system saves raw numbers and calculates the score when a person asks.</p></li>
+          <li><h3>Only one service can write data.</h3><p>The service that the AI model uses is read-only. If a number is wrong, only one part of the code can be the cause. Bad model output cannot change the records.</p></li>
+          <li><h3>New tools are locked by default.</h3><p>Only the highest role can use a new tool until a person gives wider access. If someone forgets, nobody can use the tool. That is safer than everybody using it.</p></li>
+          </ol>
+        </div>
+        <div>
+          <h3 class="col-h">Lessons from production failures</h3>
+          <ol>
+          <li><h3>Alert on silence, not only on errors.</h3><p>An expired credential stopped all scheduled jobs for weeks. Nothing ran, so nothing logged an error. Now I alert when a job does not report.</p></li>
+          <li><h3>Test the path that real users take.</h3><p>I tested a sign-in fix with a service key. Users signed in another way, and the fix did not work for them. Now I test each fix on the real user path.</p></li>
+          <li><h3>Make rules executable.</h3><p>A comment said "keep these two values the same". Nobody read it, and a job stopped for two weeks. Now a test fails the build when the values do not agree.</p></li>
+          </ol>
+        </div>
       </div>
     </div>
   </section>
@@ -286,7 +272,7 @@
     <div class="wrap">
       <header class="section-head"><h2 id="skills-h">Skills and tools</h2></header>
       <div class="skills">
-        <div>
+        <div class="skill-row">
           <h3>Cloud</h3>
           <ul class="logos">
             <li><img src="icons/azure.svg" alt="">Microsoft Azure</li>
@@ -298,7 +284,7 @@
             <li><img src="icons/aws.svg" alt="">AWS</li>
           </ul>
         </div>
-        <div>
+        <div class="skill-row">
           <h3>Platform and DevOps</h3>
           <ul class="logos">
             <li><img src="icons/kubernetes.svg" alt="">Kubernetes</li>
@@ -310,7 +296,7 @@
             <li><img src="icons/github.svg" alt="">Git and GitHub</li>
           </ul>
         </div>
-        <div>
+        <div class="skill-row">
           <h3>AI and automation</h3>
           <ul class="logos">
             <li><img src="icons/mcp.svg" alt="">MCP servers</li>
@@ -324,7 +310,7 @@
             <li><img src="icons/microsoft.svg" alt="">Microsoft Graph</li>
           </ul>
         </div>
-        <div>
+        <div class="skill-row">
           <h3>Data</h3>
           <ul class="logos">
             <li><img src="icons/python.svg" alt="">Python</li>
@@ -338,7 +324,7 @@
             <li><img src="icons/power-bi.svg" alt="">Power BI</li>
           </ul>
         </div>
-        <div>
+        <div class="skill-row">
           <h3>Business systems</h3>
           <ul class="logos">
             <li><img src="icons/connectwise.svg" alt="">ConnectWise PSA</li>
