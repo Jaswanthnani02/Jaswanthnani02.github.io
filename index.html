@@ -239,6 +239,7 @@
         <div>
           <p class="stack-h">cloud</p>
           <ul>
+            <li><img src="icons/azure.svg" alt="">Microsoft Azure</li>
             <li><img src="icons/azure-functions.svg" alt="">Azure Functions</li>
             <li><img src="icons/container-apps.svg" alt="">Container Apps</li>
             <li><img src="icons/cosmos-db.svg" alt="">Cosmos DB</li>
@@ -254,6 +255,7 @@
             <li><img src="icons/ai-search.svg" alt="">Azure AI Search</li>
             <li><img src="icons/claude.svg" alt="">Claude</li>
             <li><img src="icons/n8n.svg" alt="">n8n</li>
+            <li><img src="icons/microsoft.svg" alt="">Power Automate</li>
             <li><img src="icons/microsoft.svg" alt="">Microsoft Graph</li>
           </ul>
         </div>
@@ -262,11 +264,23 @@
           <ul>
             <li><img src="icons/python.svg" alt="">Python</li>
             <li><img src="icons/sql.svg" alt="">SQL</li>
-            <li><img src="icons/postgresql.svg" alt="">PostgreSQL</li>
+            <li><img src="icons/snowflake.svg" alt="">Snowflake</li>
+            <li><img src="icons/snowflake.svg" alt="">SnowSQL</li>
+            <li><img src="icons/databricks.svg" alt="">Databricks</li>
             <li><img src="icons/spark.svg" alt="">PySpark</li>
+            <li><img src="icons/postgresql.svg" alt="">PostgreSQL</li>
             <li><img src="icons/kafka.svg" alt="">Kafka</li>
             <li><img src="icons/tableau.svg" alt="">Tableau</li>
             <li><img src="icons/power-bi.svg" alt="">Power BI</li>
+          </ul>
+        </div>
+        <div>
+          <p class="stack-h">business systems</p>
+          <ul>
+            <li><img src="icons/connectwise.svg" alt="">ConnectWise PSA</li>
+            <li><img src="icons/itglue.svg" alt="">IT Glue</li>
+            <li><img src="icons/auvik.svg" alt="">Auvik</li>
+            <li><img src="icons/salesforce.svg" alt="">Salesforce CRM</li>
           </ul>
         </div>
       </div>
@@ -365,18 +379,40 @@
         </div>
       </div>
 
-      <div class="photos">
-        <button type="button" data-zoom="conference-google-cloud.jpg" data-caption="Google Cloud AI Live + Labs, Agentic Work"><img src="conference-google-cloud.jpg" alt="Jaswanth at Google Cloud AI Live + Labs" loading="lazy" width="1024" height="768"></button>
-        <button type="button" data-zoom="conference-pax8-2026.jpg" data-caption="Pax8 Beyond 2026, BetterWorld Technology team"><img src="conference-pax8-2026.jpg" alt="BetterWorld Technology team at Pax8 Beyond 2026" loading="lazy" width="1400" height="809"></button>
-        <button type="button" data-zoom="conference-pax8-mainstage.jpg" data-caption="Pax8 Beyond, main stage"><img src="conference-pax8-mainstage.jpg" alt="Jaswanth with colleagues at Pax8 Beyond main stage" loading="lazy" width="1400" height="1050"></button>
+      <h3 class="sub-h">Conferences</h3>
+      <div class="show surface" id="show" aria-roledescription="carousel" aria-label="Conference photos">
+        <div class="show-stage">
+          <figure class="slide is-on" aria-roledescription="slide" aria-label="1 of 3">
+            <button type="button" data-zoom="conference-google-cloud.jpg" data-caption="Google Cloud AI Live + Labs, Agentic Work" tabindex="0"><img src="conference-google-cloud.jpg" alt="Jaswanth at Google Cloud AI Live + Labs" width="1024" height="768"></button>
+          </figure>
+          <figure class="slide" aria-roledescription="slide" aria-label="2 of 3" aria-hidden="true">
+            <button type="button" data-zoom="conference-pax8-2026.jpg" data-caption="Pax8 Beyond 2026, BetterWorld Technology team" tabindex="-1"><img src="conference-pax8-2026.jpg" alt="BetterWorld Technology team at Pax8 Beyond 2026" width="1400" height="809" loading="lazy"></button>
+          </figure>
+          <figure class="slide" aria-roledescription="slide" aria-label="3 of 3" aria-hidden="true">
+            <button type="button" data-zoom="conference-pax8-mainstage.jpg" data-caption="Pax8 Beyond, main stage" tabindex="-1"><img src="conference-pax8-mainstage.jpg" alt="Jaswanth with colleagues at Pax8 Beyond main stage" width="1400" height="1050" loading="lazy"></button>
+          </figure>
+        </div>
+        <div class="show-bar">
+          <p class="show-cap" id="showCap" aria-live="polite">Google Cloud AI Live + Labs, Agentic Work</p>
+          <div class="show-ctrl">
+            <span class="show-count mono"><span id="showIdx">1</span> / 3</span>
+            <button type="button" class="icon-btn" id="showPrev" aria-label="Previous photo">‹</button>
+            <button type="button" class="icon-btn" id="showPlay" aria-label="Pause slideshow">❚❚</button>
+            <button type="button" class="icon-btn" id="showNext" aria-label="Next photo">›</button>
+          </div>
+        </div>
+        <div class="show-progress" aria-hidden="true"><span id="showBar"></span></div>
       </div>
-      <p class="mono dim photos-cap">conferences: google cloud ai live + labs · pax8 beyond 2026</p>
     </section>
 
-    <section class="sec contact" aria-label="Contact">
-      <p>I want to build AI and platform systems that real teams use. Send me an email.</p>
-      <p><a class="btn btn-primary" href="mailto:jaswanthnani02@gmail.com">jaswanthnani02@gmail.com</a></p>
-      <p class="dim">Remote, hybrid, on-site, or relocation. Work authorization: F-1 STEM OPT, eligible for the 24-month extension.</p>
+    <section class="close" aria-labelledby="close-h">
+      <h2 id="close-h">Want to build an AI system? Let's connect.</h2>
+      <p>Send me a message on LinkedIn or by email. Tell me about the problem. I will tell you how I can help.</p>
+      <div class="close-actions">
+        <a class="btn btn-primary btn-lg" href="https://www.linkedin.com/in/gaddamjaswanth/" rel="noopener"><img src="icons/linkedin.svg" alt="" width="16" height="16">Connect on LinkedIn</a>
+        <a class="btn btn-lg" href="mailto:jaswanthnani02@gmail.com">jaswanthnani02@gmail.com</a>
+      </div>
+      <p class="close-meta mono">chicago, il · remote, hybrid, on-site, or relocation · f-1 stem opt, eligible for the 24-month extension</p>
     </section>
   </main>
 </div>
