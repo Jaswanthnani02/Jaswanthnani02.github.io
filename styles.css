@@ -224,6 +224,7 @@ a:hover { text-decoration-color: var(--fg); }
 .timeline p:last-child { max-width: 46rem; }
 
 .creds { margin-top: clamp(1.5rem, 4vh, 2.5rem); }
+.other-certs { margin-top: 1.25rem; font-size: 0.9rem; color: var(--fg-3); max-width: 52rem; }
 .cred { display: flex; gap: 1.25rem; align-items: flex-start; text-decoration: none; color: inherit; }
 .cred img { flex: none; width: auto; height: 2.25rem; margin-top: 0.15rem; }
 .cred h3 { font-size: 1.1rem; margin-bottom: 0.35rem; }

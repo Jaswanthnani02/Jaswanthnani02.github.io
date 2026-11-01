@@ -6,7 +6,7 @@ Portfolio site for **Jaswanth Gaddam**, Cloud and AI Solutions Engineer (Chicago
 
 ## What's on it
 
-- **Hero** with the key results, then **selected work**: the ticket dispatcher (with a live model of its two assignment rules), the client intelligence platform (with an architecture diagram), the operations dashboard, n8n onboarding, doc-link-check, and earlier data pipelines
+- **Hero** with the key results, then **selected work**: BWT Brain (RAG knowledge platform), the ticket dispatcher (with a live model of its two assignment rules), the client intelligence platform (with an architecture diagram), the operations dashboard, n8n onboarding, doc-link-check, and earlier data pipelines
 - **How I build:** three design decisions and three production lessons from the [case study](https://github.com/Jaswanthnani02/client-intelligence-platform)
 - **Experience, education, certification, skills** (with logos), a conference photo ticker, and contact
 
@@ -20,18 +20,10 @@ GitHub Actions deploys `main` to GitHub Pages (`.github/workflows/static.yml`).
 | Path | Purpose |
 | --- | --- |
 | `index.html`, `styles.css`, `script.js` | The portfolio and the dispatcher model |
-| `resume.html` | The resume as a web page; the source of the PDF |
-| `Jaswanth-Gaddam-Resume.pdf` | One-page resume, built by `scripts/make-resume-pdf.js` |
+| `Jaswanth-Gaddam-Resume.pdf` | The resume. Replace this file to update it; every link points here |
 | `fonts/` | Geist (SIL Open Font License, `fonts/OFL.txt`) |
 | `icons/` | Technology logos: Microsoft Azure architecture icons, svg-logos (CC0), devicon and VS Code icons (MIT), vendor marks from MIT-licensed n8n nodes |
 | `scripts/make-og.js` | Renders `scripts/og-card.html` to `og-card.png`, the link preview |
-
-To rebuild the resume PDF after you edit `resume.html`:
-
-```sh
-python3 -m http.server 8765 &
-node scripts/make-resume-pdf.js
-```
 
 ## Run locally
 
