@@ -6,10 +6,11 @@ Portfolio site for **Jaswanth Gaddam**, Cloud and AI Solutions Engineer (Chicago
 
 ## What's on it
 
-- **Work:** the ticket dispatcher (100,000+ tickets assigned), the client intelligence platform (MCP tools with per-call authorization), the operations dashboard, n8n onboarding, and doc-link-check
-- **A live model** of the dispatcher's two assignment rules, and an inline SVG architecture diagram drawn from the [case study](https://github.com/Jaswanthnani02/client-intelligence-platform)
-- **Decisions and incidents** taken from the case study, then stack, history, certification, and contact
-- Keyboard shortcuts: `E` email, `R` resume, `G` then `W/S/D/I/H` to go to a section, `?` for the list
+- **Hero** with the key results, then **selected work**: the ticket dispatcher (with a live model of its two assignment rules), the client intelligence platform (with an architecture diagram), the operations dashboard, n8n onboarding, doc-link-check, and earlier data pipelines
+- **How I build:** three design decisions and three production lessons from the [case study](https://github.com/Jaswanthnani02/client-intelligence-platform)
+- **Experience, education, certification, skills** (with logos), a conference photo ticker, and contact
+
+The layout scales with the screen: the root font size grows from 16px on phones to 24px on large monitors, and every size uses `rem`.
 
 ## Stack
 
@@ -18,14 +19,19 @@ GitHub Actions deploys `main` to GitHub Pages (`.github/workflows/static.yml`).
 
 | Path | Purpose |
 | --- | --- |
-| `index.html` | The portfolio |
-| `styles.css` / `script.js` | Dark theme, clock, shortcuts, dispatcher model, image zoom |
-| `resume.html` / `Jaswanth-Gaddam-Resume.pdf` | The resume as a web page and as a PDF |
-| `fonts/` | Geist and Geist Mono (SIL Open Font License, `fonts/OFL.txt`) |
-| `icons/` | Technology logos: Microsoft Azure architecture icons, svg-logos (CC0), VS Code icons (MIT) |
+| `index.html`, `styles.css`, `script.js` | The portfolio and the dispatcher model |
+| `resume.html` | The resume as a web page; the source of the PDF |
+| `Jaswanth-Gaddam-Resume.pdf` | One-page resume, built by `scripts/make-resume-pdf.js` |
+| `fonts/` | Geist (SIL Open Font License, `fonts/OFL.txt`) |
+| `icons/` | Technology logos: Microsoft Azure architecture icons, svg-logos (CC0), devicon and VS Code icons (MIT), vendor marks from MIT-licensed n8n nodes |
 | `scripts/make-og.js` | Renders `scripts/og-card.html` to `og-card.png`, the link preview |
 
-Colors follow Radix Colors (gray-dark, green-dark). Radii follow GitHub Primer.
+To rebuild the resume PDF after you edit `resume.html`:
+
+```sh
+python3 -m http.server 8765 &
+node scripts/make-resume-pdf.js
+```
 
 ## Run locally
 
