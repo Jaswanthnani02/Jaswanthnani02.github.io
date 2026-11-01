@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jaswanth Gaddam · Cloud and AI Solutions Engineer</title>
-<meta name="description" content="Jaswanth Gaddam builds Azure automation and AI tools for IT operations teams. Chicago. Open to AI and platform engineering roles.">
+<meta name="description" content="Jaswanth Gaddam, applied AI engineer in Chicago. RAG platform that cut document lookup time by about 70%, MCP servers, and Azure automation for IT operations.">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#111111">
 <meta property="og:type" content="website">
@@ -57,7 +57,7 @@
       <div class="hero-text">
         <p class="eyebrow">Cloud and AI Solutions Engineer · Chicago</p>
         <h1>I build AI and automation systems that IT teams use every day.</h1>
-        <p class="hero-sub">I am Jaswanth Gaddam. At BetterWorld Technology, my ticket dispatcher assigned 100,000+ support tickets in six months. My onboarding flow sets up a new employee in 10 minutes. Before, it took up to 5 days.</p>
+        <p class="hero-sub">I am Jaswanth Gaddam, an applied AI engineer with a data engineering background. At BetterWorld Technology, an IT services company with 188 client organizations, my RAG platform cut document lookup time by about 70%. My ticket dispatcher assigned 100,000+ tickets in six months.</p>
         <div class="actions">
           <a class="btn btn-primary" href="https://www.linkedin.com/in/gaddamjaswanth/" rel="noopener"><img src="icons/linkedin.svg" alt="" width="18" height="18">Connect on LinkedIn</a>
           <a class="btn" href="Jaswanth-Gaddam-Resume.pdf">Download resume</a>
@@ -70,10 +70,10 @@
 
     <div class="wrap">
       <dl class="stats">
+        <div><dt>Faster document lookup</dt><dd>~70%</dd></div>
+        <div><dt>AI agent first-try success, up from 40%</dt><dd>90%+</dd></div>
         <div><dt>Tickets assigned automatically</dt><dd>100,000+</dd></div>
-        <div><dt>New-hire setup time</dt><dd>10 min</dd></div>
-        <div><dt>AI tools in production</dt><dd>~35</dd></div>
-        <div><dt>Automated tests</dt><dd>~1,200</dd></div>
+        <div><dt>New-hire setup, down from 2–5 days</dt><dd>10 min</dd></div>
       </dl>
     </div>
   </section>
@@ -84,6 +84,22 @@
         <h2 id="work-h">Selected work</h2>
         <p>These systems run in production. Client data stays private. Public repositories show the same patterns.</p>
       </header>
+
+      <article class="project project--stack">
+        <div class="project-text">
+          <p class="project-tag">BetterWorld Technology</p>
+          <h3>BWT Brain: unified knowledge platform (RAG)</h3>
+          <p class="project-result">Cut technician document lookup time by <strong>about 70%</strong>. AI agents now answer correctly on the first try <strong>90%+</strong> of the time, up from about 40%.</p>
+          <p>IT documentation for 188 client organizations was in separate tools. Technicians searched each tool by hand. I built one AI-searchable store for all of it. A Python worker on Azure Container Apps syncs the documents into Azure AI Search. Each search combines keyword match (BM25), vector embeddings, and semantic re-ranking. KEDA autoscaling handles bursts of sync work and keeps idle cost near zero.</p>
+          <ul class="logos">
+            <li><img src="icons/ai-search.svg" alt="">Azure AI Search</li>
+            <li><img src="icons/container-apps.svg" alt="">Container Apps</li>
+            <li><img src="icons/python.svg" alt="">Python</li>
+            <li><img src="icons/mcp.svg" alt="">MCP</li>
+            <li><img src="icons/itglue.svg" alt="">IT Glue</li>
+          </ul>
+        </div>
+      </article>
 
       <article class="project">
         <div class="project-text">
@@ -121,9 +137,9 @@
       <article class="project project--stack">
         <div class="project-text">
           <p class="project-tag">BetterWorld Technology</p>
-          <h3>Client intelligence platform</h3>
+          <h3>Operations data platform and MCP servers</h3>
           <p class="project-result">Account managers ask a question in plain words. They get an answer from real numbers in <strong>seconds</strong>, not in an afternoon.</p>
-          <p>Client data was in four systems: tickets, devices, documents, and surveys. I built 21 scheduled jobs that copy the data into one store. A read-only service gives about 35 tools to a language model (MCP). Each call checks the user's role and the clients that user can see.</p>
+          <p>Client data was in four systems: tickets, devices, documents, and surveys. I built 21 scheduled jobs that copy the data into one store. A read-only service gives about 35 tools to a language model (MCP). Each call checks the user's role and the clients that user can see. I also built three production MCP servers for ConnectWise, IT Glue, and Auvik, with authentication and role-based access.</p>
           <ul class="logos">
             <li><img src="icons/cosmos-db.svg" alt="">Cosmos DB</li>
             <li><img src="icons/mcp.svg" alt="">MCP</li>
@@ -178,7 +194,7 @@
         <article class="card">
           <p class="project-tag">BetterWorld Technology</p>
           <h3>New-hire onboarding</h3>
-          <p>One n8n flow with approval steps. It sets up licenses, accounts, apps, manager, and calendar, then sends the welcome email. Setup time went from 2–5 business days to 5–10 minutes.</p>
+          <p>One n8n flow with approval steps. It sets up licenses, accounts, apps, manager, and calendar, then sends the welcome email. Setup time went from 2–5 business days to 5–10 minutes. I also wrote a 7-phase onboarding plan for TaxValet that removes about 75% of the manual work.</p>
           <ul class="logos logos--small"><li><img src="icons/n8n.svg" alt="">n8n</li><li><img src="icons/microsoft.svg" alt="">Microsoft Graph</li></ul>
         </article>
         <article class="card">
@@ -191,7 +207,7 @@
         <article class="card">
           <p class="project-tag">Nexturn</p>
           <h3>Payment data pipelines</h3>
-          <p>I moved Splunk data with PySpark and compared payments in PostgreSQL. I built Matillion ETL pipelines and wrote down each data flow. I made reports in Tableau and Power BI.</p>
+          <p>I processed 5M+ payment records each day from Splunk with PySpark and reconciled them in PostgreSQL. I built 15+ Matillion ETL pipelines and 25+ Tableau and Power BI dashboards.</p>
           <ul class="logos logos--small"><li><img src="icons/spark.svg" alt="">PySpark</li><li><img src="icons/postgresql.svg" alt="">PostgreSQL</li><li><img src="icons/tableau.svg" alt="">Tableau</li></ul>
         </article>
       </div>
@@ -202,7 +218,7 @@
     <div class="wrap">
       <header class="section-head">
         <h2 id="approach-h">How I build</h2>
-        <p>Three design decisions and three lessons from the client intelligence platform. <a href="https://github.com/Jaswanthnani02/client-intelligence-platform" rel="noopener">Full write-ups on GitHub</a>.</p>
+        <p>Three design decisions and three lessons from the operations data platform. <a href="https://github.com/Jaswanthnani02/client-intelligence-platform" rel="noopener">Full write-ups on GitHub</a>.</p>
       </header>
       <div class="approach">
         <div>
@@ -235,7 +251,7 @@
             <span class="tl-date">Oct 2025 – Present</span>
           </div>
           <p class="tl-org">BetterWorld Technology · Chicago, IL</p>
-          <p>I build the automation and AI tools for an IT managed services company: ticket dispatch, MCP tool servers, data platforms, dashboards, and onboarding flows on Azure.</p>
+          <p>I build AI and automation systems for an IT managed services company with 188 client organizations: a RAG knowledge platform, MCP servers, ticket dispatch, an operations data platform, and onboarding flows on Azure. I also wrote the AI strategy brief for leadership and evaluated AI vendors. Now I am building an agentic IT operations platform with n8n, Claude, and MCP for first-level ticket triage.</p>
         </li>
         <li>
           <div class="tl-head">
@@ -243,7 +259,7 @@
             <span class="tl-date">Jun 2022 – Dec 2023</span>
           </div>
           <p class="tl-org">Nexturn · India</p>
-          <p>I built and operated data pipelines with PySpark, Matillion, and SQL. I maintained PostgreSQL databases for payment reconciliation and made reports in Tableau and Power BI.</p>
+          <p>I built 15+ ETL pipelines with Matillion, Python, and SQL that process 10 GB+ of data each day. I made PostgreSQL queries 40% faster and built 25+ Tableau and Power BI dashboards. I used Kafka and PySpark for large datasets.</p>
         </li>
       </ol>
 
@@ -253,7 +269,7 @@
           <div>
             <p class="project-tag">Education</p>
             <h3>M.S. Data Science and Engineering</h3>
-            <p>Florida Atlantic University · Jan 2024 – May 2025</p>
+            <p>Florida Atlantic University · Jan 2024 – Dec 2025</p>
           </div>
         </article>
         <a class="card cred cred-link" href="https://learn.microsoft.com/en-us/users/jaswanthgaddam/credentials/af3c690144b4ee0d" rel="noopener">
@@ -265,6 +281,7 @@
           </div>
         </a>
       </div>
+      <p class="other-certs">Also certified: Anthropic Claude Code and Cowork · Databricks Generative AI Fundamentals · AWS Introduction to Generative AI · Snowflake Hands-on (all badges) · IBM Introduction to Data Engineering · Databases and SQL for Data Science (Coursera)</p>
     </div>
   </section>
 
@@ -281,7 +298,7 @@
             <li><img src="icons/cosmos-db.svg" alt="">Cosmos DB</li>
             <li><img src="icons/redis.svg" alt="">Azure Redis</li>
             <li><img src="icons/blob-storage.svg" alt="">Blob Storage</li>
-            <li><img src="icons/aws.svg" alt="">AWS</li>
+            <li><img src="icons/aws.svg" alt="">AWS (S3, EC2, Lambda, Redshift)</li>
           </ul>
         </div>
         <div class="skill-row">
@@ -311,6 +328,18 @@
           </ul>
         </div>
         <div class="skill-row">
+          <h3>Machine learning</h3>
+          <ul class="logos">
+            <li><img src="icons/pytorch.svg" alt="">PyTorch</li>
+            <li><img src="icons/tensorflow.svg" alt="">TensorFlow</li>
+            <li><img src="icons/scikit-learn.svg" alt="">scikit-learn</li>
+            <li><img src="icons/crewai.svg" alt="">CrewAI</li>
+            <li><img src="icons/pandas.svg" alt="">Pandas</li>
+            <li><img src="icons/numpy.svg" alt="">NumPy</li>
+            <li><img src="icons/jupyter.svg" alt="">Jupyter</li>
+          </ul>
+        </div>
+        <div class="skill-row">
           <h3>Data</h3>
           <ul class="logos">
             <li><img src="icons/python.svg" alt="">Python</li>
@@ -320,6 +349,10 @@
             <li><img src="icons/spark.svg" alt="">PySpark</li>
             <li><img src="icons/postgresql.svg" alt="">PostgreSQL</li>
             <li><img src="icons/kafka.svg" alt="">Kafka</li>
+            <li><img src="icons/airflow.svg" alt="">Airflow</li>
+            <li><img src="icons/hadoop.svg" alt="">Hadoop</li>
+            <li><img src="icons/mysql.svg" alt="">MySQL</li>
+            <li><img src="icons/mongodb.svg" alt="">MongoDB</li>
             <li><img src="icons/tableau.svg" alt="">Tableau</li>
             <li><img src="icons/power-bi.svg" alt="">Power BI</li>
           </ul>
