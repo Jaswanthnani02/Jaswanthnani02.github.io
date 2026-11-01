@@ -1,31 +1,16 @@
 // Jaswanth Gaddam — portfolio
-// Small parts: a Chicago clock, keyboard shortcuts, the active section in
-// the rail, and a model of the ticket dispatcher. The conference ticker is CSS only.
-
-// ---------- Chicago clock ----------
-(function clock() {
-  const el = document.getElementById('clock');
-  if (!el) return;
-  const fmt = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/Chicago', hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZoneName: 'short'
-  });
-  const tick = () => { el.textContent = fmt.format(new Date()).toLowerCase(); };
-  tick();
-  setInterval(tick, 30000);
-})();
-
-// ---------- Dispatcher model ----------
-// Six technicians close tickets at different speeds.
-// Round-robin gives tickets in turn. Weighted load gives each ticket to the
-// technician with the fewest open tickets. The load gap is the busiest
-// technician's open tickets minus the least busy technician's open tickets.
+// A small model of the ticket dispatcher.
+// Six technicians close tickets at different speeds. Round-robin gives tickets
+// in turn. Weighted load gives each ticket to the technician with the fewest
+// open tickets. The load gap is the busiest technician's open tickets minus
+// the least busy technician's open tickets.
 (function dispatcher() {
   const root = document.getElementById('sim');
   if (!root) return;
 
   const rowsEl = document.getElementById('simRows');
   const countEl = document.getElementById('simCount');
-  const fairEl = document.getElementById('simFair');
+  const gapEl = document.getElementById('simFair');
   const runBtn = document.getElementById('simRun');
   const modeBtns = root.querySelectorAll('[data-mode]');
 
@@ -37,13 +22,14 @@
     { name: 'chen', speed: 0.08 },
     { name: 'noor', speed: 0.06 }
   ];
-  const SCALE = 40;
-  const LIMIT = 300;
+  const SCALE = 40;   // open tickets that fill a bar
+  const LIMIT = 300;  // tickets per run
   let mode = 'wl';
   let next = 0;
   let assigned = 0;
   let timer = null;
   let done = false;
+  let userPaused = false;
 
   techs.forEach(t => {
     t.open = 0;
@@ -58,7 +44,8 @@
 
   function reset() {
     techs.forEach(t => { t.open = 0; });
-    next = 0; assigned = 0;
+    next = 0;
+    assigned = 0;
     draw();
   }
 
@@ -73,20 +60,16 @@
     return best;
   }
 
-  function gap() {
-    const loads = techs.map(t => t.open);
-    return Math.max(...loads) - Math.min(...loads);
-  }
-
   function draw() {
-    const max = Math.max(...techs.map(t => t.open));
+    const loads = techs.map(t => t.open);
+    const max = Math.max(...loads);
     techs.forEach(t => {
       t.fill.style.width = Math.min(100, (t.open / SCALE) * 100) + '%';
       t.n.textContent = t.open;
       t.row.classList.toggle('top', max > 0 && t.open === max);
     });
     countEl.textContent = assigned;
-    fairEl.textContent = assigned ? gap() : '—';
+    gapEl.textContent = assigned ? max - Math.min(...loads) : '—';
   }
 
   function step() {
@@ -104,19 +87,22 @@
     timer = setInterval(step, 380);
     runBtn.textContent = 'Pause';
   }
+
   function stop() {
     clearInterval(timer);
     timer = null;
     runBtn.textContent = 'Start';
   }
 
-  runBtn.addEventListener('click', () => (timer ? stop() : start()));
+  runBtn.addEventListener('click', () => {
+    if (timer) { stop(); userPaused = true; } else { start(); userPaused = false; }
+  });
+
   modeBtns.forEach(b => b.addEventListener('click', () => {
     mode = b.dataset.mode;
     modeBtns.forEach(x => x.setAttribute('aria-pressed', String(x === b)));
-    const sb = document.getElementById('sbMode');
-    if (sb) sb.textContent = b.textContent;
     reset();
+    if (!timer && !userPaused) start();
   }));
 
   draw();
@@ -125,8 +111,6 @@
   // Do not start without a click if the reader asked for reduced motion.
   const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!calm && 'IntersectionObserver' in window) {
-    let userPaused = false;
-    runBtn.addEventListener('click', () => { userPaused = !timer; });
     new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting && !userPaused) start();
@@ -135,46 +119,3 @@
     }, { threshold: 0.4 }).observe(root);
   }
 })();
-
-// ---------- Keyboard shortcuts ----------
-// E: email. R: resume. G then W/S/D/I/H: go to a section. ?: show the list.
-(function keys() {
-  const dlg = document.getElementById('keys');
-  const btn = document.getElementById('keysBtn');
-  const open = () => { if (dlg && !dlg.open && dlg.showModal) dlg.showModal(); };
-  if (btn) btn.addEventListener('click', open);
-
-  const go = { w: 'work', s: 'stack', d: 'decisions', i: 'incidents', h: 'history' };
-  let gAt = 0;
-  document.addEventListener('keydown', e => {
-    if (e.metaKey || e.ctrlKey || e.altKey) return;
-    if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable) return;
-    if (document.querySelector('dialog[open]') && e.key !== '?') return;
-    const k = e.key.toLowerCase();
-    if (k === '?') { e.preventDefault(); open(); return; }
-    if (k === 'g') { gAt = Date.now(); return; }
-    if (Date.now() - gAt < 1000 && go[k]) {
-      gAt = 0;
-      const el = document.getElementById(go[k]);
-      if (el) { el.scrollIntoView(); history.replaceState(null, '', '#' + go[k]); }
-      return;
-    }
-    if (k === 'e') window.location.href = 'mailto:jaswanthnani02@gmail.com';
-    if (k === 'r') window.location.href = 'Jaswanth-Gaddam-Resume.pdf';
-  });
-})();
-
-// ---------- Active section in the rail ----------
-(function activeNav() {
-  const links = document.querySelectorAll('[data-nav]');
-  if (!links.length || !('IntersectionObserver' in window)) return;
-  const set = id => links.forEach(a => a.classList.toggle('active', a.dataset.nav === id));
-  const seen = new Map();
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => seen.set(e.target.id, e.isIntersecting));
-    const first = [...links].map(a => a.dataset.nav).find(id => seen.get(id));
-    if (first) set(first);
-  }, { rootMargin: '-10% 0px -60% 0px' });
-  links.forEach(a => { const s = document.getElementById(a.dataset.nav); if (s) io.observe(s); });
-})();
-
