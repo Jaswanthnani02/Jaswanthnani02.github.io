@@ -104,19 +104,20 @@ a:hover { color: var(--link-hover); text-decoration-color: currentColor; }
 .eyebrow { color: var(--fg-3); font-weight: 500; font-size: 0.95rem; margin-bottom: 1.25rem; }
 .hero h1 { font-size: clamp(2rem, 3.4vw, 3.1rem); line-height: 1.12; letter-spacing: -0.03em; }
 .hero-sub { font-size: clamp(1.05rem, 1.3vw, 1.25rem); line-height: 1.6; margin-top: 1.5rem; max-width: 38em; }
-/* Hero stage: a WebGL sky with drifting clouds (script.js) behind a cut-out portrait. */
+/* Hero stage: a WebGL wave field (script.js) behind a cut-out portrait. */
 .hero-stage {
   position: relative; margin: 0; justify-self: end; width: 100%; max-width: 26rem;
   aspect-ratio: 4 / 5; overflow: hidden; isolation: isolate;
   border-radius: 1rem; border: 1px solid var(--line);
-  /* Fallback when WebGL2 is not available: a still twilight sky. */
+  /* Fallback when WebGL2 is not available: a still gradient in the same colors. */
   background:
-    radial-gradient(60% 40% at 80% 12%, rgba(160, 180, 215, .35) 0%, transparent 70%),
-    radial-gradient(80% 22% at 30% 62%, rgba(210, 220, 235, .28) 0%, transparent 70%),
-    linear-gradient(to bottom, #09111f 0%, #1c365e 55%, #7394bf 100%);
+    radial-gradient(120% 80% at 20% 15%, #1f9d6b 0%, transparent 55%),
+    radial-gradient(90% 70% at 85% 35%, #2b59c3 0%, transparent 60%),
+    radial-gradient(100% 90% at 50% 100%, #4b3aa8 0%, transparent 60%),
+    #0d1b2a;
 }
-.hero-sky { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity .8s ease; }
-.hero-sky.is-live { opacity: 1; }
+.hero-waves { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity .8s ease; }
+.hero-waves.is-live { opacity: 1; }
 .hero-stage::after {
   /* Soft fade at the bottom so the portrait sits on the page, not on a box edge. */
   content: ""; position: absolute; inset: auto 0 0 0; height: 18%; z-index: 1;
@@ -419,7 +420,7 @@ a:hover { color: var(--link-hover); text-decoration-color: currentColor; }
   .ticker { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
   .ticker-track { animation: none; }
   .tick[aria-hidden="true"] { display: none; }
-  .hero-sky { transition: none; }
+  .hero-waves { transition: none; }
   .hello { transform: none; }
 }
 
