@@ -10,7 +10,7 @@ Portfolio site for **Jaswanth Gaddam**, Cloud and AI Solutions Engineer (Chicago
 - **How I build:** three design decisions and three production lessons from the [case study](https://github.com/Jaswanthnani02/client-intelligence-platform)
 - **Experience, education, certification, skills** (with logos), a conference photo ticker, and contact
 
-The hero has a WebGL2 wave field (an original fragment shader in `script.js`) behind a cut-out portrait (`portrait-cutout.webp`, made from `profile.jpg` with an offline background-removal model). It follows the mouse, pauses off screen, draws one still frame with reduced motion, and falls back to a CSS gradient without WebGL2.
+The hero has a WebGL2 twilight sky with two layers of lit, drifting clouds (an original fragment shader in `script.js`) behind a cut-out portrait (`portrait-cutout.webp`, made from `profile.jpg` with an offline background-removal model). It follows the mouse, pauses off screen, draws one still frame with reduced motion, and falls back to a CSS gradient without WebGL2.
 
 The layout scales with the screen: the root font size grows from 16px on phones to 24px on large monitors, and every size uses `rem`.
 
