@@ -102,10 +102,30 @@ a:hover { text-decoration-color: var(--fg); }
 .eyebrow { color: var(--fg-3); font-weight: 500; font-size: 0.95rem; margin-bottom: 1.25rem; }
 .hero h1 { font-size: clamp(2rem, 3.4vw, 3.1rem); line-height: 1.12; letter-spacing: -0.03em; }
 .hero-sub { font-size: clamp(1.05rem, 1.3vw, 1.25rem); line-height: 1.6; margin-top: 1.5rem; max-width: 38em; }
-.hero-photo { margin: 0; justify-self: end; width: 100%; max-width: 20rem; }
-.hero-photo img {
-  display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%;
-  border-radius: 0.75rem; border: 1px solid var(--line);
+/* Hero stage: a WebGL wave field (script.js) behind a cut-out portrait. */
+.hero-stage {
+  position: relative; margin: 0; justify-self: end; width: 100%; max-width: 26rem;
+  aspect-ratio: 4 / 5; overflow: hidden; isolation: isolate;
+  border-radius: 1rem; border: 1px solid var(--line);
+  /* Fallback when WebGL2 is not available: a still gradient in the same colors. */
+  background:
+    radial-gradient(120% 80% at 20% 15%, #1f9d6b 0%, transparent 55%),
+    radial-gradient(90% 70% at 85% 35%, #2b59c3 0%, transparent 60%),
+    radial-gradient(100% 90% at 50% 100%, #4b3aa8 0%, transparent 60%),
+    #0d1b2a;
+}
+.hero-waves { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity .8s ease; }
+.hero-waves.is-live { opacity: 1; }
+.hero-stage::after {
+  /* Soft fade at the bottom so the portrait sits on the page, not on a box edge. */
+  content: ""; position: absolute; inset: auto 0 0 0; height: 18%; z-index: 1;
+  background: linear-gradient(to bottom, transparent, rgba(17,17,17,.55));
+  pointer-events: none;
+}
+.hero-person {
+  position: absolute; z-index: 2; left: 50%; bottom: 0; transform: translateX(-50%);
+  width: 108%; max-width: none; height: auto; pointer-events: none; user-select: none;
+  filter: drop-shadow(0 18px 40px rgba(0,0,0,.45));
 }
 
 .stats {
@@ -378,8 +398,8 @@ a:hover { text-decoration-color: var(--fg); }
   .nav-links { display: none; }
   .nav-inner { justify-content: space-between; height: 3.5rem; }
   .hero-inner { grid-template-columns: minmax(0, 1fr); }
-  .hero-photo { order: -1; justify-self: start; max-width: 9rem; }
-  .hero-photo img { border-radius: 1rem; }
+  .hero-stage { order: -1; justify-self: stretch; max-width: none; aspect-ratio: auto; height: clamp(16rem, 72vw, 22rem); }
+  .hero-person { width: auto; height: 100%; }
   .cards, .grid-2, .approach, .lab-grid, .lab-grid--code { grid-template-columns: minmax(0, 1fr); }
   .lab-actions .btn { flex: 1 1 100%; }
   .skill-row { grid-template-columns: minmax(0, 1fr); gap: 0.5rem; }
@@ -397,6 +417,7 @@ a:hover { text-decoration-color: var(--fg); }
   .ticker { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
   .ticker-track { animation: none; }
   .tick[aria-hidden="true"] { display: none; }
+  .hero-waves { transition: none; }
   .hello { transform: none; }
 }
 
