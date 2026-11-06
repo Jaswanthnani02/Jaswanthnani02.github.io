@@ -58,8 +58,8 @@
     <div class="wrap hero-inner">
       <div class="hero-text">
         <p class="eyebrow">Cloud and AI Solutions Engineer · Chicago</p>
-        <h1>I build AI and automation systems that IT teams use every day.</h1>
-        <p class="hero-sub">I am Jaswanth Gaddam, an applied AI engineer with a data engineering background. At BetterWorld Technology, an IT services company with 188 client organizations, my RAG platform cut document lookup time by about 70%. My ticket dispatcher assigned 100,000+ tickets in six months.</p>
+        <h1>I build AI search, MCP servers, and ticket automation for IT support teams.</h1>
+        <p class="hero-sub">I'm Jaswanth Gaddam, an applied AI engineer with a data engineering background. At BetterWorld Technology, an IT services company with 188 client organizations, I build on Azure; before that I built data pipelines at Nexturn. The numbers below come from systems in production.</p>
         <div class="actions">
           <a class="btn btn-primary" href="https://www.linkedin.com/in/gaddamjaswanth/" rel="noopener"><img src="icons/linkedin.svg" alt="" width="18" height="18">Connect on LinkedIn</a>
           <a class="btn" href="Jaswanth-Gaddam-Resume.pdf">Download resume</a>
@@ -85,7 +85,7 @@
     <div class="wrap">
       <header class="section-head">
         <h2 id="work-h">Selected work</h2>
-        <p>These systems run in production. Client data stays private. Public repositories show the same patterns.</p>
+        <p>Everything here runs in production. Client data stays private, so the public repositories rebuild the same patterns on mock data.</p>
       </header>
 
       <article class="project project--stack">
@@ -93,7 +93,7 @@
           <p class="project-tag">BetterWorld Technology</p>
           <h3>BWT Brain: unified knowledge platform (RAG)</h3>
           <p class="project-result">Cut technician document lookup time by <strong>about 70%</strong>. AI agents now answer correctly on the first try <strong>90%+</strong> of the time, up from about 40%.</p>
-          <p>IT documentation for 188 client organizations was in separate tools. Technicians searched each tool by hand. I built one AI-searchable store for all of it. A Python worker on Azure Container Apps syncs the documents into Azure AI Search. Each search combines keyword match (BM25), vector embeddings, and semantic re-ranking. KEDA autoscaling handles bursts of sync work and keeps idle cost near zero.</p>
+          <p>Documentation for 188 client organizations sat in separate tools, and technicians searched each one by hand. I put all of it into one AI-searchable index: a Python worker on Azure Container Apps syncs the documents into Azure AI Search, where every query combines keyword matching (BM25), vector embeddings, and semantic re-ranking. KEDA autoscaling absorbs bursts of sync work and keeps idle compute cost near zero.</p>
           <ul class="logos">
             <li><img src="icons/ai-search.svg" alt="">Azure AI Search</li>
             <li><img src="icons/container-apps.svg" alt="">Container Apps</li>
@@ -108,9 +108,9 @@
         <div class="project-text">
           <p class="project-tag">BetterWorld Technology</p>
           <h3>Ticket dispatcher</h3>
-          <p class="project-result">Assigned <strong>100,000+ tickets</strong> in six months. No person sorts the queue now.</p>
-          <p>Before, dispatchers sorted each new ticket by hand. Some technicians got too much work. Others got too little.</p>
-          <p>I built an Azure Function that reads new tickets from the ConnectWise API and selects the correct board. It gives each ticket to a technician by turn (round-robin) or by current workload (weighted load).</p>
+          <p class="project-result">Assigned <strong>100,000+ tickets</strong> in six months.</p>
+          <p>Dispatchers used to sort every new ticket by hand, and the load ended up uneven: some technicians had far more open work than others.</p>
+          <p>I built an Azure Function that reads new tickets from the ConnectWise API, picks the right board, and assigns each ticket either in turn (round-robin) or to the technician with the lightest current load (weighted load).</p>
           <ul class="logos">
             <li><img src="icons/azure-functions.svg" alt="">Azure Functions</li>
             <li><img src="icons/python.svg" alt="">Python</li>
@@ -127,7 +127,7 @@
               <button type="button" data-mode="wl" aria-pressed="true">Weighted load</button>
             </div>
           </div>
-          <p class="sim-desc">Six technicians close tickets at different speeds. Compare how open work spreads.</p>
+          <p class="sim-desc">Six simulated technicians close tickets at different speeds. Switch rules and watch how the open work spreads.</p>
           <div class="sim-rows" id="simRows"></div>
           <div class="sim-foot">
             <span><b id="simCount">0</b> tickets assigned</span>
@@ -141,8 +141,8 @@
         <div class="project-text">
           <p class="project-tag">BetterWorld Technology</p>
           <h3>Operations data platform and MCP servers</h3>
-          <p class="project-result">Account managers ask a question in plain words. They get an answer from real numbers in <strong>seconds</strong>, not in an afternoon.</p>
-          <p>Client data was in four systems: tickets, devices, documents, and surveys. I built 21 scheduled jobs that copy the data into one store. A read-only service gives about 35 tools to a language model (MCP). Each call checks the user's role and the clients that user can see. I also built three production MCP servers for ConnectWise, IT Glue, and Auvik, with authentication and role-based access.</p>
+          <p class="project-result">Account managers ask questions in plain English and get answers from ticket, device, document, and survey data that is no more than about <strong>15 minutes old</strong>. Preparing for a client meeting used to take an afternoon.</p>
+          <p>That data lived in four systems. Twenty-one scheduled jobs now copy it into one Cosmos DB store, and a read-only service exposes about 35 tools to a language model over MCP, checking the caller's role and client access on every call. Alongside it I built three production MCP servers, for ConnectWise, IT Glue, and Auvik, each with authentication and role-based access.</p>
           <ul class="logos">
             <li><img src="icons/cosmos-db.svg" alt="">Cosmos DB</li>
             <li><img src="icons/mcp.svg" alt="">MCP</li>
@@ -183,7 +183,7 @@
               <rect class="dg-bg" x="430" y="224" width="200" height="16"/><text class="dg-l" x="530" y="236">only write path: create ticket</text>
             </svg>
           </div>
-          <figcaption>Architecture. Only the ingestion service writes data. The AI layer is read-only.</figcaption>
+          <figcaption>Architecture: only the ingestion service writes data; the query service that the model calls is read-only.</figcaption>
         </figure>
       </article>
 
@@ -191,19 +191,19 @@
         <article class="card">
           <p class="project-tag">BetterWorld Technology</p>
           <h3>Operations dashboard</h3>
-          <p>One screen for ticket volume, technician load, client health, and time to resolve. An AI model reads ticket notes and tells why work stopped. It also makes the weekly and monthly reports.</p>
+          <p>One screen for ticket volume, technician load, client health scores, and MTTR, with Azure AI Foundry summarizing the notes on unresolved tickets. The same data produces the weekly flash report and the monthly operations report.</p>
           <ul class="logos logos--small"><li><img src="icons/container-apps.svg" alt="">Container Apps</li><li><img src="icons/redis.svg" alt="">Redis</li><li><img src="icons/ai-foundry.svg" alt="">AI Foundry</li></ul>
         </article>
         <article class="card">
           <p class="project-tag">BetterWorld Technology</p>
           <h3>New-hire onboarding</h3>
-          <p>One n8n flow with approval steps. It sets up licenses, accounts, apps, manager, and calendar, then sends the welcome email. Setup time went from 2–5 business days to 5–10 minutes. I also wrote a 7-phase onboarding plan for TaxValet that removes about 75% of the manual work.</p>
+          <p>An n8n flow with approval steps sets up licenses, Microsoft Graph credentials, apps, manager, and calendar, then sends the welcome email; setup went from 2–5 business days to 5–10 minutes. I also wrote a 7-phase onboarding plan for TaxValet, projected to remove about 75% of the manual effort.</p>
           <ul class="logos logos--small"><li><img src="icons/n8n.svg" alt="">n8n</li><li><img src="icons/microsoft.svg" alt="">Microsoft Graph</li></ul>
         </article>
         <article class="card">
           <p class="project-tag">BetterWorld Technology · In progress</p>
           <h3>Agentic IT operations platform</h3>
-          <p>An autonomous platform that combines n8n, Claude, React Flow, and MCP integrations. Version 1 sorts and answers first-level tickets, so fewer tickets reach a technician.</p>
+          <p>An autonomous IT operations platform built on n8n, Claude, React Flow, and MCP integrations. Version 1 targets first-level ticket triage, to deflect tickets before they reach a technician.</p>
           <ul class="logos logos--small"><li><img src="icons/n8n.svg" alt="">n8n</li><li><img src="icons/claude.svg" alt="">Claude</li><li><img src="icons/react.svg" alt="">React Flow</li><li><img src="icons/mcp.svg" alt="">MCP</li></ul>
         </article>
         <article class="card">
@@ -220,7 +220,7 @@
     <div class="wrap">
       <header class="section-head">
         <h2 id="lab-h">Try it: how the systems work</h2>
-        <p>These three demos run in your browser on mock data. They show the same patterns that run in production at BetterWorld Technology.</p>
+        <p>The demos below run in your browser on mock data and follow the same patterns as the production systems at BetterWorld Technology.</p>
       </header>
 
       <div class="lab panel">
@@ -278,7 +278,7 @@
 
         <!-- Cosmos DB ingestion -->
         <div class="lab-pane" role="tabpanel" id="pane-cosmos" aria-labelledby="tab-cosmos" hidden>
-          <p class="lab-intro">Scheduled jobs copy four source systems into one Cosmos DB container, partitioned by client. Each source keeps a watermark. The watermark stays a little behind on purpose, so runs overlap and no late update is lost. Upserts are idempotent, so the overlap never makes duplicates.</p>
+          <p class="lab-intro">Scheduled jobs copy four source systems into one Cosmos DB container partitioned by client. Each source keeps a watermark that deliberately lags a few minutes behind, so consecutive runs overlap and an update made mid-run still gets read; because upserts are idempotent, the overlap creates no duplicates.</p>
           <div class="lab-actions">
             <button type="button" class="btn btn-primary" id="cosRun">Run sync</button>
             <button type="button" class="btn" id="cosEdit">Change a ticket in the PSA</button>
@@ -297,7 +297,7 @@
 
         <!-- Functions + Key Vault -->
         <div class="lab-pane" role="tabpanel" id="pane-kv" aria-labelledby="tab-kv" hidden>
-          <p class="lab-intro">The dispatcher is a timer-triggered Azure Function. It does not keep the ConnectWise API key in code or in settings. It gets the key from Azure Key Vault with its managed identity.</p>
+          <p class="lab-intro">The dispatcher is a timer-triggered Azure Function. It reads the ConnectWise API key from Azure Key Vault through its managed identity, so the key never appears in code or app settings.</p>
           <div class="lab-grid lab-grid--code">
 <pre class="code code--lg"><span class="c"># function_app.py  (Azure Functions, Python v2 model)</span>
 <span class="k">import</span> os
@@ -321,10 +321,10 @@ vault = SecretClient(os.environ[<span class="s">"KEY_VAULT_URL"</span>], credent
         tech = pick_technician(board, rule=<span class="s">"weighted_load"</span>)
         assign(ticket, tech, api_key)</pre>
             <ol class="steps">
-              <li><b>Turn on a managed identity</b> for the Function App. Azure gives the app its own identity in Microsoft Entra ID.</li>
-              <li><b>Give it one role:</b> "Key Vault Secrets User" on that vault only. It can read secrets. It cannot change them.</li>
-              <li><b>Store only the vault URL</b> in app settings. Or use a Key Vault reference: <code>@Microsoft.KeyVault(SecretUri=…)</code>.</li>
-              <li><b>Rotate the key in Key Vault.</b> The function reads the new value. No code change and no new deployment.</li>
+              <li><b>Turn on a managed identity</b> for the Function App, which gives it its own identity in Microsoft Entra ID.</li>
+              <li><b>Grant one role,</b> "Key Vault Secrets User", scoped to that vault: the function can read secrets but cannot change them.</li>
+              <li><b>Store only the vault URL</b> in app settings, or use a Key Vault reference such as <code>@Microsoft.KeyVault(SecretUri=…)</code>.</li>
+              <li><b>Rotate the key in Key Vault;</b> the function picks up the new value without a code change or a redeploy.</li>
             </ol>
           </div>
         </div>
@@ -337,23 +337,23 @@ vault = SecretClient(os.environ[<span class="s">"KEY_VAULT_URL"</span>], credent
     <div class="wrap">
       <header class="section-head">
         <h2 id="approach-h">How I build</h2>
-        <p>Three design decisions and three lessons from the operations data platform. <a href="https://github.com/Jaswanthnani02/client-intelligence-platform" rel="noopener">Full write-ups on GitHub</a>.</p>
+        <p>From the operations data platform. The full decision records and incident reports are <a href="https://github.com/Jaswanthnani02/client-intelligence-platform" rel="noopener">on GitHub</a>.</p>
       </header>
       <div class="approach">
         <div>
-          <h3 class="col-h">Decisions I will defend</h3>
+          <h3 class="col-h">Design decisions</h3>
           <ol>
-          <li><h3>Calculate scores on request. Do not save them.</h3><p>A saved health score became false when its data changed. I deleted the feature, although people liked it. Now the system saves raw numbers and calculates the score when a person asks.</p></li>
-          <li><h3>Only one service can write data.</h3><p>The service that the AI model uses is read-only. If a number is wrong, only one part of the code can be the cause. Bad model output cannot change the records.</p></li>
-          <li><h3>New tools are locked by default.</h3><p>Only the highest role can use a new tool until a person gives wider access. If someone forgets, nobody can use the tool. That is safer than everybody using it.</p></li>
+          <li><h3>Health scores computed at read time</h3><p>The platform used to store a health score per client, and the score went stale whenever the data behind it changed. I deleted the feature even though people liked it; the system now stores raw signals and computes the score when someone asks for it.</p></li>
+          <li><h3>A single writer</h3><p>The service the AI model talks to is read-only, so a wrong number can only come from one component, and bad model output has no path to the records.</p></li>
+          <li><h3>New tools locked to admins</h3><p>A new tool is available only to the highest role until someone grants wider access on purpose. A forgotten permission therefore produces a tool nobody can call, instead of one everybody can.</p></li>
           </ol>
         </div>
         <div>
-          <h3 class="col-h">Lessons from production failures</h3>
+          <h3 class="col-h">Lessons from production incidents</h3>
           <ol>
-          <li><h3>Alert on silence, not only on errors.</h3><p>An expired credential stopped all scheduled jobs for weeks. Nothing ran, so nothing logged an error. Now I alert when a job does not report.</p></li>
-          <li><h3>Test the path that real users take.</h3><p>I tested a sign-in fix with a service key. Users signed in another way, and the fix did not work for them. Now I test each fix on the real user path.</p></li>
-          <li><h3>Make rules executable.</h3><p>A comment said "keep these two values the same". Nobody read it, and a job stopped for two weeks. Now a test fails the build when the values do not agree.</p></li>
+          <li><h3>Alerts for jobs that stop reporting</h3><p>A stale storage credential stopped every scheduled job for weeks, and because nothing ran, nothing logged an error. Monitoring now alerts when a job fails to report at all.</p></li>
+          <li><h3>Fixes verified on the user's sign-in path</h3><p>I verified an authorization fix using the service key, which was easy to script; users sign in through single sign-on, and for them it was still broken. I now test every fix on the path real users take.</p></li>
+          <li><h3>Invariants enforced by tests</h3><p>A job schedule changed while a constant derived from it did not, and a downstream recalculation stopped for about two weeks. A comment had said to keep them in sync. A test now fails the build when they disagree.</p></li>
           </ol>
         </div>
       </div>
@@ -508,7 +508,7 @@ vault = SecretClient(os.environ[<span class="s">"KEY_VAULT_URL"</span>], credent
   <section class="section close" id="contact" aria-labelledby="close-h">
     <div class="wrap">
       <h2 id="close-h">Want to build an AI system? Let's connect.</h2>
-      <p>Send me a message on LinkedIn or by email. Tell me about the problem. I will tell you how I can help.</p>
+      <p>Message me on LinkedIn or by email with the problem you're working on, and I'll reply with how I would approach it.</p>
       <div class="actions actions--center">
         <a class="btn btn-primary btn-lg" href="https://www.linkedin.com/in/gaddamjaswanth/" rel="noopener"><img src="icons/linkedin.svg" alt="" width="18" height="18">Connect on LinkedIn</a>
         <a class="btn btn-lg" href="mailto:jaswanthnani02@gmail.com">jaswanthnani02@gmail.com</a>
