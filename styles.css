@@ -20,7 +20,9 @@
   --fg: #eeeeee;
   --fg-2: #b4b4b4;
   --fg-3: #8a8a8a;
-  --accent: #3dd68c;
+  --accent: #3dd68c;   /* green: results and live status */
+  --link: #70b8ff;     /* blue: links, focus, selected tabs (Radix blue-dark 11) */
+  --link-hover: #9ccbff;
   --warn: #ffb224;
   --r: 0.75rem;
   --sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
@@ -54,9 +56,9 @@ h1, h2, h3 { margin: 0; color: var(--fg); font-weight: 600; letter-spacing: -0.0
 p { margin: 0 0 1rem; text-wrap: pretty; }
 p:last-child { margin-bottom: 0; }
 img { max-width: 100%; }
-a { color: var(--fg); text-decoration-color: var(--line-2); text-underline-offset: 0.2em; }
-a:hover { text-decoration-color: var(--fg); }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+a { color: var(--link); text-decoration-color: rgba(112, 184, 255, .35); text-underline-offset: 0.2em; }
+a:hover { color: var(--link-hover); text-decoration-color: currentColor; }
+:focus-visible { outline: 2px solid var(--link); outline-offset: 3px; border-radius: 4px; }
 
 .wrap { width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
 .skip { position: absolute; left: -999px; }
@@ -79,8 +81,8 @@ a:hover { text-decoration-color: var(--fg); }
 .btn-lg { min-height: 3.25rem; padding: 0 1.6rem; font-size: 1rem; }
 .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
 .actions--center { justify-content: center; }
-.link { display: inline-block; margin-top: 0.5rem; font-weight: 500; text-decoration: none; color: var(--fg); }
-.link:hover { color: var(--accent); }
+.link { display: inline-block; margin-top: 0.5rem; font-weight: 500; text-decoration: none; color: var(--link); }
+.link:hover { color: var(--link-hover); }
 .links-row { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; }
 
 /* ---------- Navigation ---------- */
@@ -232,7 +234,7 @@ a:hover { text-decoration-color: var(--fg); }
   background: none; border: 0; border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap;
 }
 .lab-tabs [role="tab"]:hover { color: var(--fg); }
-.lab-tabs [role="tab"][aria-selected="true"] { color: var(--fg); border-bottom-color: var(--accent); }
+.lab-tabs [role="tab"][aria-selected="true"] { color: var(--fg); border-bottom-color: var(--link); }
 .lab-pane { padding: clamp(1.25rem, 3vw, 2rem); }
 .lab-intro { max-width: 52rem; margin-bottom: 1.5rem; }
 .lab-intro b { color: var(--fg); font-weight: 600; }
@@ -245,7 +247,7 @@ a:hover { text-decoration-color: var(--fg); }
   font: 0.925rem var(--sans); color: var(--fg); background: var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%238a8a8a' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 0.75rem center;
   border: 1px solid var(--line-2); border-radius: 0.5rem; appearance: none; cursor: pointer;
 }
-.lab-form select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.lab-form select:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
 .lab-form .btn { margin-top: 0.25rem; }
 .lab-label { margin: 1rem 0 0.4rem; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.02em; color: var(--fg-3); }
 .lab-out .lab-label:first-child { margin-top: 0; }
@@ -310,7 +312,8 @@ a:hover { text-decoration-color: var(--fg); }
 .cred img { flex: none; width: auto; height: 2.25rem; margin-top: 0.15rem; }
 .cred h3 { font-size: 1.1rem; margin-bottom: 0.35rem; }
 .cred p:last-child { color: var(--fg-3); font-size: 0.9rem; }
-.cred-link:hover h3 { color: var(--accent); }
+.cred-link:hover h3 { color: var(--link-hover); }
+.cred-verify { color: var(--link); font-weight: 500; }
 
 /* ---------- Skills ---------- */
 .skills { display: grid; }
