@@ -364,16 +364,15 @@ const pretty = obj => escapeHtml(JSON.stringify(obj, null, 2));
   reset();
 })();
 
-// ---------- Hero sky (WebGL2) ----------
-// A twilight sky with two layers of drifting clouds behind the cut-out portrait.
-// Each layer is domain-warped fractal noise (fbm). Lighting compares the cloud
-// density at a point with the density a step toward the light: where more cloud
-// sits between the point and the light, the point is in shadow. That gives
-// bright tops and darker bellies. The layers shift a little with the mouse for
-// depth. It pauses off screen or in a hidden tab, and draws one still frame for
-// visitors who ask for reduced motion.
-(function heroSky() {
-  const canvas = document.querySelector('.hero-sky');
+// ---------- Hero wave field (WebGL2) ----------
+// A full-screen fragment shader behind the cut-out portrait. Three sine waves at
+// different angles and speeds add up to one flowing value. A small domain warp
+// makes the bands bend, and the bands lean toward the mouse. The value picks a
+// color from a 6-stop palette that loops. Light grain and a vignette finish it.
+// It pauses when the hero is off screen or the tab is hidden, and draws one
+// still frame for visitors who ask for reduced motion.
+(function heroWaves() {
+  const canvas = document.querySelector('.hero-waves');
   if (!canvas) return;
   const gl = canvas.getContext('webgl2', { antialias: false, alpha: false, powerPreference: 'low-power' });
   if (!gl) return; // the CSS gradient on .hero-stage stays as the fallback
@@ -390,80 +389,52 @@ out vec4 outColor;
 uniform vec2 uRes;
 uniform vec2 uMouse;
 uniform float uTime;
+uniform vec3 uPal[6];
 
-float hash(vec2 p) {
-  p = fract(p * vec2(123.34, 456.21));
-  p += dot(p, p + 45.32);
-  return fract(p.x * p.y);
+vec3 palette(float t) {
+  t = fract(t) * 6.0;
+  int i = int(floor(t));
+  float f = smoothstep(0.0, 1.0, fract(t));
+  return mix(uPal[i], uPal[(i + 1) % 6], f);
 }
 
-float noise(vec2 p) {
-  vec2 i = floor(p), f = fract(p);
-  vec2 u = f * f * (3.0 - 2.0 * f);
-  return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x),
-             mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x), u.y);
-}
-
-const mat2 ROT = mat2(1.6, 1.2, -1.2, 1.6);
-
-float fbm(vec2 p) {
-  float sum = 0.0, amp = 0.5;
-  for (int i = 0; i < 6; i++) { sum += amp * noise(p); p = ROT * p; amp *= 0.5; }
-  return sum;
-}
-
-// Cloud coverage (0..1) for one layer. A low-frequency warp gives billowy shapes.
-float clouds(vec2 p, float t, float cover) {
-  vec2 warp = vec2(fbm(p * 0.55 + vec2(t * 0.6, 0.0)), fbm(p * 0.55 + vec2(5.2, 1.3) - vec2(0.0, t * 0.4)));
-  float d = fbm(p + 1.35 * warp + vec2(t, 0.0));
-  return smoothstep(cover, cover + 0.30, d);
-}
-
-vec3 layer(vec3 sky, vec2 q, float t, float cover, vec2 toLight, vec3 shade, vec3 lit, float opacity) {
-  float d = clouds(q, t, cover);
-  if (d < 0.002) return sky;
-  float dl = clouds(q + toLight, t, cover);
-  float light = clamp(0.62 + (d - dl) * 2.4, 0.0, 1.0);
-  vec3 c = mix(shade, lit, light);
-  // Thin edges let the sky through, like real cloud fringes.
-  return mix(sky, c, d * opacity);
-}
+float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
 
 void main() {
   float aspect = uRes.x / uRes.y;
-  vec2 uv = vUv;
-  vec2 p = vec2(uv.x * aspect, uv.y);
-  vec2 par = (uMouse - 0.5) * vec2(0.05, 0.03);
-  float t = uTime * 0.018;
+  vec2 p = vec2(vUv.x * aspect, vUv.y);
+  vec2 m = vec2(uMouse.x * aspect, uMouse.y);
+  float t = uTime * 0.22;
 
-  // Sky: deep navy overhead to soft blue near the horizon.
-  vec3 zenith  = vec3(0.035, 0.067, 0.13);
-  vec3 middle  = vec3(0.11, 0.21, 0.37);
-  vec3 horizon = vec3(0.45, 0.58, 0.75);
-  vec3 sky = mix(horizon, middle, smoothstep(0.0, 0.55, uv.y));
-  sky = mix(sky, zenith, smoothstep(0.45, 1.0, uv.y));
+  // Warp the plane so straight bands become waves.
+  vec2 q = p;
+  q += 0.10 * vec2(sin(q.y * 3.6 + t * 1.3), cos(q.x * 3.1 - t));
+  q += 0.05 * vec2(sin(q.y * 7.0 - t * 0.7), cos(q.x * 6.0 + t * 0.9));
 
-  // Light source behind the clouds, upper right.
-  vec2 lightPos = vec2(0.80 * aspect, 0.88);
-  float ld = distance(p, lightPos);
-  sky += vec3(0.62, 0.70, 0.84) * exp(-ld * ld * 5.0) * 0.38;
-  vec2 toLight = normalize(lightPos - p) * 0.07;
+  // Bands lean toward the cursor.
+  float d = distance(p, m);
+  q += (m - p) * 0.22 * exp(-d * d * 5.0);
 
-  // Far layer: smaller, slower, cooler.
-  vec3 col = layer(sky, p * vec2(2.2, 3.4) + par * 0.5, t * 0.6, 0.42, toLight,
-                   vec3(0.19, 0.26, 0.40), vec3(0.74, 0.80, 0.90), 0.70);
-  // Near layer: larger, faster, brighter; a little heavier toward the bottom.
-  float cover = 0.31 + 0.09 * uv.y;
-  col = layer(col, p * vec2(1.2, 2.0) + par + vec2(3.7, 1.1), t, cover, toLight * 1.3,
-              vec3(0.22, 0.29, 0.43), vec3(0.95, 0.96, 0.99), 0.95);
+  float w = sin(q.x * 5.0 + t)
+          + 0.65 * sin((q.x + q.y) * 3.8 - t * 0.8)
+          + 0.45 * sin((q.y * 2.4 - q.x * 1.2) * 3.0 + t * 0.6);
+  w = w / 4.2 + 0.5;
 
-  // Silver lining near the light.
-  col += vec3(0.85, 0.88, 0.95) * exp(-ld * ld * 9.0) * 0.10;
+  vec3 col = palette(w * 1.7 + t * 0.04);
 
-  // Fine film grain and a vignette that settles the corners into the page.
-  col += (hash(gl_FragCoord.xy + floor(uTime * 24.0)) - 0.5) * 0.025;
-  vec2 v = uv * 2.0 - 1.0;
-  col *= 1.0 - 0.32 * smoothstep(0.35, 1.7, dot(v, v));
+  // Brighter crest along each band, like light on silk.
+  float crest = 1.0 - abs(fract(w * 5.0) - 0.5) * 2.0;
+  col += pow(crest, 10.0) * 0.16;
+
+  // Soft glow at the cursor.
+  col += exp(-d * d * 14.0) * 0.06;
+
+  // Fine grain, changed 24 times a second.
+  col += (hash(gl_FragCoord.xy + floor(uTime * 24.0)) - 0.5) * 0.045;
+
+  // Vignette pulls the corners down into the page.
+  vec2 v = vUv * 2.0 - 1.0;
+  col *= 1.0 - 0.38 * smoothstep(0.3, 1.6, dot(v, v));
 
   outColor = vec4(clamp(col, 0.0, 1.0), 1.0);
 }`;
@@ -493,11 +464,15 @@ void main() {
   const uRes = gl.getUniformLocation(prog, 'uRes');
   const uMouse = gl.getUniformLocation(prog, 'uMouse');
   const uTime = gl.getUniformLocation(prog, 'uTime');
+  // Palette: deep navy, emerald, mint (the site accent), blue, indigo, teal.
+  const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16) / 255);
+  const PAL = ['#0d1b2a', '#1f9d6b', '#3dd68c', '#2b59c3', '#4b3aa8', '#0e5e63'].flatMap(hex);
+  gl.uniform3fv(gl.getUniformLocation(prog, 'uPal'), new Float32Array(PAL));
 
   const stage = canvas.parentElement;
   let w = 0, h = 0;
   function resize() {
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     w = Math.max(1, Math.round(stage.clientWidth * dpr));
     h = Math.max(1, Math.round(stage.clientHeight * dpr));
     if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
@@ -520,8 +495,7 @@ void main() {
     mouse.x += (mouse.tx - mouse.x) * 0.05;
     mouse.y += (mouse.ty - mouse.y) * 0.05;
     gl.uniform2f(uMouse, mouse.x, mouse.y);
-    // With reduced motion the time is fixed, so every redraw is the same still frame.
-    gl.uniform1f(uTime, calm ? 40 : (now - start) / 1000);
+    gl.uniform1f(uTime, (now - start) / 1000);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     raf = calm ? 0 : requestAnimationFrame(frame);
   }
@@ -536,6 +510,6 @@ void main() {
   }
   document.addEventListener('visibilitychange', () => (document.hidden ? pause() : play()));
 
-  if (calm) frame(performance.now()); else play();
+  if (calm) { start -= 4000; frame(performance.now()); } else play();
   canvas.classList.add('is-live');
 })();
