@@ -363,3 +363,153 @@ const pretty = obj => escapeHtml(JSON.stringify(obj, null, 2));
   $('cosReset').addEventListener('click', reset);
   reset();
 })();
+
+// ---------- Hero wave field (WebGL2) ----------
+// A full-screen fragment shader behind the cut-out portrait. Three sine waves at
+// different angles and speeds add up to one flowing value. A small domain warp
+// makes the bands bend, and the bands lean toward the mouse. The value picks a
+// color from a 6-stop palette that loops. Light grain and a vignette finish it.
+// It pauses when the hero is off screen or the tab is hidden, and draws one
+// still frame for visitors who ask for reduced motion.
+(function heroWaves() {
+  const canvas = document.querySelector('.hero-waves');
+  if (!canvas) return;
+  const gl = canvas.getContext('webgl2', { antialias: false, alpha: false, powerPreference: 'low-power' });
+  if (!gl) return; // the CSS gradient on .hero-stage stays as the fallback
+
+  const VERT = `#version 300 es
+in vec2 aPos;
+out vec2 vUv;
+void main() { vUv = aPos * 0.5 + 0.5; gl_Position = vec4(aPos, 0.0, 1.0); }`;
+
+  const FRAG = `#version 300 es
+precision highp float;
+in vec2 vUv;
+out vec4 outColor;
+uniform vec2 uRes;
+uniform vec2 uMouse;
+uniform float uTime;
+uniform vec3 uPal[6];
+
+vec3 palette(float t) {
+  t = fract(t) * 6.0;
+  int i = int(floor(t));
+  float f = smoothstep(0.0, 1.0, fract(t));
+  return mix(uPal[i], uPal[(i + 1) % 6], f);
+}
+
+float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+
+void main() {
+  float aspect = uRes.x / uRes.y;
+  vec2 p = vec2(vUv.x * aspect, vUv.y);
+  vec2 m = vec2(uMouse.x * aspect, uMouse.y);
+  float t = uTime * 0.22;
+
+  // Warp the plane so straight bands become waves.
+  vec2 q = p;
+  q += 0.10 * vec2(sin(q.y * 3.6 + t * 1.3), cos(q.x * 3.1 - t));
+  q += 0.05 * vec2(sin(q.y * 7.0 - t * 0.7), cos(q.x * 6.0 + t * 0.9));
+
+  // Bands lean toward the cursor.
+  float d = distance(p, m);
+  q += (m - p) * 0.22 * exp(-d * d * 5.0);
+
+  float w = sin(q.x * 5.0 + t)
+          + 0.65 * sin((q.x + q.y) * 3.8 - t * 0.8)
+          + 0.45 * sin((q.y * 2.4 - q.x * 1.2) * 3.0 + t * 0.6);
+  w = w / 4.2 + 0.5;
+
+  vec3 col = palette(w * 1.7 + t * 0.04);
+
+  // Brighter crest along each band, like light on silk.
+  float crest = 1.0 - abs(fract(w * 5.0) - 0.5) * 2.0;
+  col += pow(crest, 10.0) * 0.16;
+
+  // Soft glow at the cursor.
+  col += exp(-d * d * 14.0) * 0.06;
+
+  // Fine grain, changed 24 times a second.
+  col += (hash(gl_FragCoord.xy + floor(uTime * 24.0)) - 0.5) * 0.045;
+
+  // Vignette pulls the corners down into the page.
+  vec2 v = vUv * 2.0 - 1.0;
+  col *= 1.0 - 0.38 * smoothstep(0.3, 1.6, dot(v, v));
+
+  outColor = vec4(clamp(col, 0.0, 1.0), 1.0);
+}`;
+
+  function compile(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.error(gl.getShaderInfoLog(s)); return null; }
+    return s;
+  }
+  const vs = compile(gl.VERTEX_SHADER, VERT), fs = compile(gl.FRAGMENT_SHADER, FRAG);
+  if (!vs || !fs) return;
+  const prog = gl.createProgram();
+  gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { console.error(gl.getProgramInfoLog(prog)); return; }
+  gl.useProgram(prog);
+
+  // One triangle that covers the whole screen.
+  gl.bindVertexArray(gl.createVertexArray());
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+  const aPos = gl.getAttribLocation(prog, 'aPos');
+  gl.enableVertexAttribArray(aPos);
+  gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+  const uRes = gl.getUniformLocation(prog, 'uRes');
+  const uMouse = gl.getUniformLocation(prog, 'uMouse');
+  const uTime = gl.getUniformLocation(prog, 'uTime');
+  // Palette: deep navy, emerald, mint (the site accent), blue, indigo, teal.
+  const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16) / 255);
+  const PAL = ['#0d1b2a', '#1f9d6b', '#3dd68c', '#2b59c3', '#4b3aa8', '#0e5e63'].flatMap(hex);
+  gl.uniform3fv(gl.getUniformLocation(prog, 'uPal'), new Float32Array(PAL));
+
+  const stage = canvas.parentElement;
+  let w = 0, h = 0;
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    w = Math.max(1, Math.round(stage.clientWidth * dpr));
+    h = Math.max(1, Math.round(stage.clientHeight * dpr));
+    if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
+    gl.viewport(0, 0, w, h);
+    gl.uniform2f(uRes, w, h);
+  }
+
+  // The cursor position eases toward the target, so the waves follow softly.
+  const mouse = { x: 0.55, y: 0.55, tx: 0.55, ty: 0.55 };
+  window.addEventListener('pointermove', e => {
+    const r = stage.getBoundingClientRect();
+    mouse.tx = (e.clientX - r.left) / r.width;
+    mouse.ty = 1 - (e.clientY - r.top) / r.height;
+  }, { passive: true });
+
+  const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let raf = 0, visible = true, start = performance.now();
+
+  function frame(now) {
+    mouse.x += (mouse.tx - mouse.x) * 0.05;
+    mouse.y += (mouse.ty - mouse.y) * 0.05;
+    gl.uniform2f(uMouse, mouse.x, mouse.y);
+    gl.uniform1f(uTime, (now - start) / 1000);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    raf = calm ? 0 : requestAnimationFrame(frame);
+  }
+  function play() { if (!raf && visible && !document.hidden) raf = requestAnimationFrame(frame); }
+  function pause() { cancelAnimationFrame(raf); raf = 0; }
+
+  resize();
+  if ('ResizeObserver' in window) new ResizeObserver(() => { resize(); if (calm) frame(performance.now()); }).observe(stage);
+  else window.addEventListener('resize', resize);
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible ? play() : pause(); }).observe(stage);
+  }
+  document.addEventListener('visibilitychange', () => (document.hidden ? pause() : play()));
+
+  if (calm) { start -= 4000; frame(performance.now()); } else play();
+  canvas.classList.add('is-live');
+})();
